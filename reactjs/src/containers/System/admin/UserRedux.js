@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl'; // fomat language
 import { LANGUAGE } from '../../../utils'; // vi or en
+import * as action from "../../../store/actions";
 import { changeLanguage } from '../../../store/actions'; // change language
-import { getAllcodeService } from '../../../services/userService';
-
 import { connect } from 'react-redux';
+import down from "../../../assets/down.png";
+import "./UserRedux.scss"
 class UserRedux extends Component
 {
     // change language
@@ -18,13 +19,25 @@ class UserRedux extends Component
     {
         super( props );
         this.state = {
-            genderArr: []
+            genderArr: [],
+
         };
+    }
+
+    componentDidUpdate ( prevProps, prevState, snapshot ) // so sanh prop hiện tại và prop trước đó
+    {
+        if ( prevProps.genderRedux !== this.props.genderRedux )
+        {
+            this.setState( {
+                genderArr: this.props.genderRedux
+            } )
+        }
     }
 
     async componentDidMount ()
     {
-        try
+        this.props.getGenderStart();
+        /* try
         {
             let res = await getAllcodeService( 'gender' );
             if ( res && res.errCode === 0 )
@@ -37,7 +50,7 @@ class UserRedux extends Component
         catch ( err )
         {
             console.log( err );
-        }
+        } */
     }
 
 
@@ -45,6 +58,7 @@ class UserRedux extends Component
     {
         let genders = this.state.genderArr;
         let language = this.props.language;
+        console.log( "genderRedux: ", this.props.genderRedux )
         return (
             <div className="user-redux-container">
                 <div className="title" >User Redux</div>
@@ -79,8 +93,9 @@ class UserRedux extends Component
                                     <input type="text" className="form-control" id="address" placeholder="Tên" />
                                 </div>
 
-                                <div className="form-group pt-2 col-3">
+                                <div className="form-group pt-2 col-3 down-main">
                                     <label for="inputState"><FormattedMessage id="manage-user.gender-name" /></label>
+                                    <img src={down} />
                                     <select id="inputState" className="form-control">
                                         {genders && genders.length > 0 && genders.map( ( item, index ) =>
                                         {
@@ -90,8 +105,9 @@ class UserRedux extends Component
                                         } )}
                                     </select>
                                 </div>
-                                <div className="form-group pt-2 col-3">
+                                <div className="form-group pt-2 col-3 down-main">
                                     <label for="inputState"><FormattedMessage id="manage-user.position" /></label>
+                                    <img src={down} />
                                     <select id="inputState" className="form-control">
                                         <option selected>Choose...</option>
                                         <option>male</option>
@@ -99,8 +115,9 @@ class UserRedux extends Component
                                         <option>other</option>
                                     </select>
                                 </div>
-                                <div className="form-group pt-2 col-3">
+                                <div className="form-group pt-2 col-3 down-main">
                                     <label for="Gender">RoleID</label>
+                                    <img src={down} />
                                     <select id="Gender" className="form-control">
                                         <option selected>Choose...</option>
                                         <option>...</option>
@@ -125,14 +142,17 @@ class UserRedux extends Component
 const mapStateToProps = state =>
 {
     return {
-        language: state.app.language
+        language: state.app.language,
+        genderRedux: state.admin.genders,
     };
 };
 
 const mapDispatchToProps = dispatch =>
 {
     return {
-        changeLanguageApp: ( language ) => dispatch( changeLanguage( language ) ) // truyền action
+        getGenderStart: () => dispatch( action.fetchGenderStart() ),
+        /* processLogout: () => dispatch( actions.processLogout() ),*/
+        changeLanguageApp: ( language ) => dispatch( action.changeLanguage( language ) ) // truyền action 
     };
 };
 

@@ -1,33 +1,43 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    isLoggedIn: false,
-    adminInfo: null
+    isloadingGender: false,
+    genders: [],
+    roles: [],
+    position: []
 }
 
-const appReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case actionTypes.ADMIN_LOGIN_SUCCESS:
+const adminReducer = ( state = initialState, action ) =>
+{
+    switch ( action.type )
+    {
+        case actionTypes.FETCH_GENDER_START:
+            let copystate = { ...state };
+            copystate.isloadingGender = true;
+            console.log( "FETCH_GENDER_START", action )
             return {
-                ...state,
-                isLoggedIn: true,
-                adminInfo: action.adminInfo
+                ...copystate,
             }
-        case actionTypes.ADMIN_LOGIN_FAIL:
+        case actionTypes.FETCH_GENDER_SUCCESS:
+            let copystate1 = { ...state };
+            copystate1.isloadingGender = false;
+            copystate1.genders = action.data;
+            console.log( "FETCH_GENDER_SUCCESS", copystate1 )
+
             return {
-                ...state,
-                isLoggedIn: false,
-                adminInfo: null
+                ...copystate1,
             }
-        case actionTypes.PROCESS_LOGOUT:
+        case actionTypes.FETCH_GENDER_FAILED:
+            console.log( "FETCH_GENDER_FAILED", action )
+            let copystate2 = { ...state };
+            copystate2.isloadingGender = false;
+            copystate1.genders = [];
             return {
                 ...state,
-                isLoggedIn: false,
-                adminInfo: null
             }
         default:
             return state;
     }
 }
 
-export default appReducer;
+export default adminReducer;
