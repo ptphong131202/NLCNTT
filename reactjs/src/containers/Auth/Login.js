@@ -10,9 +10,11 @@ import { FormattedMessage } from 'react-intl';
 import { handleLoginApi } from '../../services/userService';
 
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
+class Login extends Component
+{
+    constructor ( props )
+    {
+        super( props );
         this.state = {
             username: '',
             password: '',
@@ -21,60 +23,71 @@ class Login extends Component {
         }
     }
 
-    handleOnChangeUserName = (e) => {
-        this.setState({
+    handleOnChangeUserName = ( e ) =>
+    {
+        this.setState( {
             username: e.target.value
-        })
+        } )
 
     }
 
-    handleOnChangePassword = (e) => {
-        this.setState({
+    handleOnChangePassword = ( e ) =>
+    {
+        this.setState( {
             password: e.target.value
-        })
+        } )
 
 
     }
 
-    handleLogin = async () => {
-        this.setState({
+    handleLogin = async () =>
+    {
+        this.setState( {
             errMessage: ''
-        })
-        try {
+        } )
+        try
+        {
 
-            let data = await handleLoginApi(this.state.username, this.state.password);
-            if (data && data.errCode !== 0) {
-                this.setState({
+            let data = await handleLoginApi( this.state.username, this.state.password );
+            if ( data && data.errCode !== 0 )
+            {
+                this.setState( {
                     errMessage: data.message
-                })
+                } )
             }
-            if (data && data.errCode === 0) {
-                this.props.userLoginSuccess(data.user);
-                console.log('loging success');
+            if ( data && data.errCode === 0 )
+            {
+                this.props.userLoginSuccess( data.user );
+                console.log( 'loging success' );
             }
 
-        } catch (e) {
-            if (e.response) {
-                if (e.response.data) {
-                    this.setState({
+        } catch ( e )
+        {
+            if ( e.response )
+            {
+                if ( e.response.data )
+                {
+                    this.setState( {
                         errMessage: e.response.data.message
-                    })
+                    } )
                 }
             }
-            console.log('error message', e.response);
+            console.log( 'error message', e.response );
         }
     }
 
-    handleShowHidePassword = () => {
+    handleShowHidePassword = () =>
+    {
 
-        this.setState({
+        this.setState( {
             showPassword: !this.state.showPassword
-        })
-        console.log(this.state.showPassword);
+        } )
+        console.log( this.state.showPassword );
     }
 
 
-    render() {
+    render ()
+    {
 
 
 
@@ -82,7 +95,7 @@ class Login extends Component {
             <div className="login-background">
                 <div className="login-container">
                     <div className="login-content row">
-                        <div className="col-12 text-center login-title">Login</div>
+                        <div className="col-12 text-center login-title text-primary">Login</div>
                         <div className="col-12 form-group">
                             <label>Username: </label>
                             <input
@@ -90,7 +103,7 @@ class Login extends Component {
                                 className="form-control login-input"
                                 placeholder="Enter your user name"
                                 value={this.state.username}
-                                onChange={(e) => this.handleOnChangeUserName(e)}
+                                onChange={( e ) => this.handleOnChangeUserName( e )}
 
                             />
 
@@ -103,7 +116,7 @@ class Login extends Component {
                                     className="form-control login-input"
                                     placeholder="Enter your password"
                                     value={this.state.password}
-                                    onChange={(e) => this.handleOnChangePassword(e)}
+                                    onChange={( e ) => this.handleOnChangePassword( e )}
 
                                 />
                                 <span onClick={() => this.handleShowHidePassword()}>
@@ -114,9 +127,10 @@ class Login extends Component {
                         <div className="col-12" style={{ color: 'red' }}>
                             {this.state.errMessage}
                         </div>
+
                         <div className="col-12">
                             <button
-                                className="btn-login"
+                                className="btn-login btn-primary"
                                 onClick={() => this.handleLogin()}
                             >Login</button>
                         </div>
@@ -137,20 +151,22 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state =>
+{
     return {
         language: state.app.language
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch =>
+{
     return {
-        navigate: (path) => dispatch(push(path)),
+        navigate: ( path ) => dispatch( push( path ) ),
         // userLoginFail: () => dispatch(actions.adminLoginFail()),
-        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo))
+        userLoginSuccess: ( userInfo ) => dispatch( actions.userLoginSuccess( userInfo ) )
     };
 
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect( mapStateToProps, mapDispatchToProps )( Login );

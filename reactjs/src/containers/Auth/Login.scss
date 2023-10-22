@@ -1,14 +1,14 @@
-.login-background{
+.login-background {
     height: 100vh;
-    background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-    
+    background: #e9edf9;
 
 
-    .login-container{
+
+    .login-container {
         max-width: 500px;
         min-width: 300px;
         height: 500px;
-        width: 400px;
+        width: 350px;
         background-color: #fff;
         border-radius: 20px;
         margin: 0 auto;
@@ -18,38 +18,40 @@
         left: 0;
         right: 0;
         margin: auto;
-  
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 
 
-        .login-content{
+        .login-content {
             padding: 20px;
 
-            .login-title{
+            .login-title {
                 font-size: 30px;
                 font-weight: 600;
             }
 
-            .login-input{
+            .login-input {
                 margin: 12px 0px;
                 border: none;
                 border-radius: none;
                 outline: 0;
                 border-bottom: 1px solid #999;
-                
+
             }
-            .login-with{
+
+            .login-with {
 
                 font-weight: 600;
             }
 
-            .social-login{
+            .social-login {
                 text-align: center;
 
-                .social-icon{
+                .social-icon {
                     font-size: 36px;
                     margin: 20px 20px;
-  
+
                 }
+
                 .fb {
                     color: #4c6ef5;
                 }
@@ -59,21 +61,23 @@
                 }
             }
 
-            .login-password{
+            .login-password {
                 position: relative;
+
                 .show-password {
                     position: absolute;
-                    right   : 10px;
-                    top     : 10px;
+                    right: 10px;
+                    top: 10px;
                     color: #777;
                     cursor: pointer;
                 }
             }
-            }
+        }
 
-        
+
     }
-    .btn-login{
+
+    .btn-login {
         width: 100%;
         margin: 12px 0px;
         border: none;
@@ -81,10 +85,14 @@
         padding: 8px 0px;
         border-radius: 25px;
         cursor: pointer;
-        background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+        background: rgba(0, 0, 255, 0.5);
 
+        &:hover {
+            background: rgba(0, 0, 255, 1);
+        }
     }
-    .forgot-password{
+
+    .forgot-password {
         float: right;
         font-size: 12px;
     }

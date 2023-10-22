@@ -19,40 +19,48 @@ import System from '../routes/System';
 
 import { CustomToastCloseButton } from '../components/CustomToast';
 import ConfirmModal from '../components/ConfirmModal';
+import HomePage from './HomePage/HomePage';
+class App extends Component
+{
 
-class App extends Component {
-
-    handlePersistorState = () => {
+    handlePersistorState = () =>
+    {
         const { persistor } = this.props;
         let { bootstrapped } = persistor.getState();
-        if (bootstrapped) {
-            if (this.props.onBeforeLift) {
-                Promise.resolve(this.props.onBeforeLift())
-                    .then(() => this.setState({ bootstrapped: true }))
-                    .catch(() => this.setState({ bootstrapped: true }));
-            } else {
-                this.setState({ bootstrapped: true });
+        if ( bootstrapped )
+        {
+            if ( this.props.onBeforeLift )
+            {
+                Promise.resolve( this.props.onBeforeLift() )
+                    .then( () => this.setState( { bootstrapped: true } ) )
+                    .catch( () => this.setState( { bootstrapped: true } ) );
+            } else
+            {
+                this.setState( { bootstrapped: true } );
             }
         }
     };
 
-    componentDidMount() {
+    componentDidMount ()
+    {
         this.handlePersistorState();
     }
 
-    render() {
+    render ()
+    {
         return (
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
                         <ConfirmModal />
-                        {this.props.isLoggedIn && <Header />}
+
 
                         <span className="content-container">
                             <Switch>
-                                <Route path={path.HOME} exact component={(Home)} />
-                                <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                                <Route path={path.HOME} exact component={( Home )} />
+                                <Route path={path.LOGIN} component={userIsNotAuthenticated( Login )} />
+                                <Route path={path.SYSTEM} component={userIsAuthenticated( System )} />
+                                <Route path={path.HOMEPAGE} component={HomePage} />
                             </Switch>
                         </span>
 
@@ -69,16 +77,18 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state =>
+{
     return {
         started: state.app.started,
         isLoggedIn: state.user.isLoggedIn
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch =>
+{
     return {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect( mapStateToProps, mapDispatchToProps )( App );

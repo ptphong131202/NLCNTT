@@ -17,31 +17,32 @@ let isDevelopment = environment === "development";
 isDevelopment = false;
 
 
-export const history = createBrowserHistory({ basename: process.env.REACT_APP_ROUTER_BASE_NAME });
+export const history = createBrowserHistory( { basename: process.env.REACT_APP_ROUTER_BASE_NAME } );
 
 const reduxStateSyncConfig = {
     whitelist: [
         actionTypes.APP_START_UP_COMPLETE,
+        actionTypes.CHANGE_LANGUAGE
     ]
 }
 
-const rootReducer = createRootReducer(history);
+const rootReducer = createRootReducer( history );
 const middleware = [
-    routerMiddleware(history),
+    routerMiddleware( history ),
     thunkMiddleware,
-    createStateSyncMiddleware(reduxStateSyncConfig),
+    createStateSyncMiddleware( reduxStateSyncConfig ),
 ]
-if (isDevelopment) middleware.push(logger);
+if ( isDevelopment ) middleware.push( logger );
 
-const composeEnhancers = (isDevelopment && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
+const composeEnhancers = ( isDevelopment && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ) ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
 const reduxStore = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(...middleware)),
+    composeEnhancers( applyMiddleware( ...middleware ) ),
 )
 
 export const dispatch = reduxStore.dispatch;
 
-export const persistor = persistStore(reduxStore);
+export const persistor = persistStore( reduxStore );
 
 export default reduxStore;

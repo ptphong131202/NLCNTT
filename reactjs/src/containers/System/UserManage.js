@@ -160,10 +160,10 @@ class UserManage extends Component
                 }
                 <div className="title text-center">manage user</div>
                 <div className=''>
-                    <button className='btn btn-primary px-2'
+                    <button className='btn  px-2 adduser'
                         onClick={() => this.handleAddNewUser()}> <i className="fas fa-plus"></i> Add new user</button>
                 </div>
-                <table className="table container mt-3 table-striped  table-bordered">
+                <table className="table container mt-3 table-striped  table-bordered table-manager">
                     <thead className="thead-dark text-center">
                         <tr className="thead-dark text-center bg-th">
                             <th scope="col">#</th>
