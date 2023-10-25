@@ -37,12 +37,7 @@ class UserManage extends Component
         {
             this.setState( {
                 arrayUsers: response.users
-            }, () =>
-            {
-                console.log( "check test 1", this.state.arrayUsers );
-
             } )
-            console.log( "check test", this.state.arrayUsers );
         }
     }
     // handle add new users

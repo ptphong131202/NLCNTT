@@ -14,24 +14,40 @@ const adminReducer = ( state = initialState, action ) =>
         case actionTypes.FETCH_GENDER_START:
             let copystate = { ...state };
             copystate.isloadingGender = true;
-            console.log( "FETCH_GENDER_START", action )
             return {
                 ...copystate,
             }
         case actionTypes.FETCH_GENDER_SUCCESS:
-            let copystate1 = { ...state };
-            copystate1.isloadingGender = false;
-            copystate1.genders = action.data;
-            console.log( "FETCH_GENDER_SUCCESS", copystate1 )
+            state.isloadingGender = false;
+            state.genders = action.data;
 
             return {
-                ...copystate1,
+                ...state,
             }
         case actionTypes.FETCH_GENDER_FAILED:
-            console.log( "FETCH_GENDER_FAILED", action )
-            let copystate2 = { ...state };
-            copystate2.isloadingGender = false;
-            copystate1.genders = [];
+            state.isloadingGender = false;
+            state.genders = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            state.position = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_POSITION_FAILED:
+            state.position = [];
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ROLE_SUCCESS:
+            state.roles = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ROLE_FAILED:
+            state.roles = [];
             return {
                 ...state,
             }
