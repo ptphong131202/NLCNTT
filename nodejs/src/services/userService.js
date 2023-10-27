@@ -162,8 +162,9 @@ let createNewUser = ( data ) =>
                 lastName: data.lastName,
                 address: data.address,
                 phonenumber: data.phonenumber,
-                gender: data.gender === '1' ? true : false,
+                gender: data.gender,
                 roleId: data.roleId,
+                positionId: data.positionId
             } )
             resolve( {
                 errCode: 0,
@@ -209,7 +210,7 @@ let updateUserData = ( data ) =>
     {
         try
         {
-            if ( !data.id )
+            if ( !data.id || !data.roleId || !data.positionId || !data.gender )
             {
                 resolve( {
                     errCode: 2,
@@ -226,6 +227,11 @@ let updateUserData = ( data ) =>
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
                 user.address = data.address;
+                user.positionId = data.positionId;
+                user.gender = data.gender;
+                user.roleId = data.roleId;
+                user.phonenumber = data.phonenumber;
+                user.email = data.email;
                 await user.save();
 
                 resolve( {

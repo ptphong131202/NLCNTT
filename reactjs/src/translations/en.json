@@ -74,7 +74,8 @@
         "gender-name": "Gender",
         "position": "Position",
         "image": "Image",
-        "add": "Add"
+        "add": "Add",
+        "edit": "Save Change"
 
     }
 
