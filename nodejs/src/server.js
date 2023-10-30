@@ -12,8 +12,8 @@ let app = express();
 app.use(cors({ origin: true }));
 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
 viewEngine(app);
 initWebRoutes(app);
