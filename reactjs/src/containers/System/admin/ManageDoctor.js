@@ -79,7 +79,7 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log("Check selectDoctor Id: ", this.state.selectedDoctor.value)
+        console.log("Check selectDoctor Id: ", this.state)
         this.props.saveInforDetailDoctor({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,

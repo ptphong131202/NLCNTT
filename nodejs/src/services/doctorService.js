@@ -7,12 +7,12 @@ let getTopDoctorHome = (limitInput) => {
                 limit: limitInput,
                 order: [["createdAt", "DESC"]],
                 where: { roleId: "R2" },
-                attribute: {
+                attributes: {
                     exclude: ['password']
                 },
                 include: [
-                    { model: db.Allcode, as: 'positionData', attribute: ['valueEn', 'valueVi'] },
-                    { model: db.Allcode, as: 'genderData', attribute: ['valueEn', 'valueVi'] }
+                    { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                    { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] }
                 ],
                 raw: true,
                 nest: true
@@ -33,7 +33,7 @@ let getAllDoctor = () => {
         try {
             let doctors = await db.User.findAll({
                 where: { roleId: "R2" },
-                attribute: {
+                attributes: {
                     exclude: ["password", "image"]
                 }
             })
@@ -61,7 +61,7 @@ let saveInforDoctor = (dataInput) => {
                 await db.Markdowns.create({
                     contentHTML: dataInput.contentHTML,
                     ContentMarkdown: dataInput.contentMarkdown,
-                    description: dataInput.description,
+                    description: dataInput.discription,
                     doctorId: dataInput.doctorId,
                 })
                 resolve({
@@ -76,8 +76,43 @@ let saveInforDoctor = (dataInput) => {
     })
 }
 
+let getDetialDoctorbyid = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required paramiter!"
+                });
+            } else {
+                let user = await db.User.findOne({
+                    where: { id: inputId },
+                    attributes: {
+                        exclude: ['password', 'image']
+                    },
+                    include: [
+                        { model: db.Markdowns, attributes: ['description', "contentHTML", "ContentMarkdown"] },
+                        { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] }
+                    ],
+                    raw: true,
+                    nest: true
+                })
+                resolve({
+                    errCode: 0,
+                    data: user
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
-    saveInforDoctor: saveInforDoctor
+    saveInforDoctor: saveInforDoctor,
+    getDetialDoctorbyid: getDetialDoctorbyid
 }

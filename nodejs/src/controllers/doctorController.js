@@ -41,8 +41,30 @@ let postInforDoctor = async (req, res) => {
         })
     }
 }
+
+
+let getDetialDoctor = async (req, res) => {
+    try {
+        if (!req.query.id) {
+            return res.status(200).json({
+                errCode: -2,
+                errMessage: "Missing required paramiter!"
+            })
+        }
+        let infor = await doctorSevice.getDetialDoctorbyid(req.query.id);
+        return res.status(200).json(infor);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from the serser!"
+        })
+    }
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
-    postInforDoctor: postInforDoctor
+    postInforDoctor: postInforDoctor,
+    getDetialDoctor: getDetialDoctor
 }
