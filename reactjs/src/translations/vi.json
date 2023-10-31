@@ -11,7 +11,6 @@
         "help": "Hỗ trợ",
         "welcome": "Xin chào"
     },
-
     "banner": {
         "medicalfoundation": "NỀN TẢNG Y TẾ",
         "healthcare": "CHĂM SÓC SỨC KHỎE TOÀN DIỆN",
@@ -26,7 +25,6 @@
         "healthtest": "Bài test sức khỏe",
         "typesearch": "Nhập để tìm kiếm"
     },
-
     "menu": {
         "admin": {
             "manage-user": "Người dùng",
@@ -40,9 +38,7 @@
             "manage-specialty": "Quản lý chuyên khoa",
             "handbook": "Cẩm nang",
             "manage-handbook": "Quản lý cẩm nang"
-
         }
-
     },
     "manage-user": {
         "adduser": "Thêm mới người dùng",
@@ -56,8 +52,9 @@
         "image": "Hình ảnh",
         "add": "Thêm người dùng",
         "edit": "Lưu thay đổi"
-
+    },
+    "homePage": {
+        "out-standing-doctor": "Bác sĩ nỗi bật tuần qua",
+        "more-info": "Tìm kiếm"
     }
-
-
 }

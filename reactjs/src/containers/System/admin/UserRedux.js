@@ -26,7 +26,6 @@ class UserRedux extends Component {
             genderArr: [],
             positionArr: [],
             roleArr: [],
-            emailArr: [],
             previewImg: "",
             isOpen: false,
             email: '',
@@ -51,7 +50,7 @@ class UserRedux extends Component {
             let arrGender = this.props.genderRedux;
             this.setState({
                 genderArr: arrGender,
-                gender: arrGender && arrGender.length > 0 ? arrGender[0].keyMap : ''
+                gender: arrGender[0].keyMap
             })
         }
 
@@ -60,7 +59,7 @@ class UserRedux extends Component {
             let arrPosition = this.props.positionRedux;
             this.setState({
                 positionArr: arrPosition,
-                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].keyMap : ""
+                position: arrPosition[0].keyMap
             })
         }
 
@@ -69,16 +68,10 @@ class UserRedux extends Component {
             let arrRole = this.props.roleRedux;
             this.setState({
                 roleArr: arrRole,
-                role: arrRole && arrRole.length > 0 ? arrRole[0].keyMap : ''
+                role: arrRole[0].keyMap
             })
         }
-        //email 
-        if (prevProps.emailRedux !== this.props.emailRedux) {
-            let arrEmail = this.props.emailRedux;
-            this.setState({
-                emailArr: arrEmail,
-            })
-        }
+
 
         if (prevProps.userList !== this.props.userList) {
             let arrGender = this.props.genderRedux;
@@ -108,7 +101,6 @@ class UserRedux extends Component {
         this.props.getPositionStart();
         this.props.getRoleStart();
         this.props.createNewUser();
-        this.props.getEmailStart();
     }
 
     // event in img for input file 
@@ -187,6 +179,15 @@ class UserRedux extends Component {
             isValid = false;
         }
 
+        /*  else if (this.state.email) {
+             let email = this.props.user;
+             for (let i = 0; i < email.length; i++) {
+                 if (this.state.email === email[i].email) {
+                     alert("Email address already exists!");
+                     isValid = false;
+                 }
+             }
+         } */
         // check validate password
         else if (!this.state.password) {
             alert("Password can't be blank!");
@@ -208,24 +209,32 @@ class UserRedux extends Component {
             alert("firstName must be greater than or equal to 1!");
             isValid = false;
         }
+
         // check validate phonenumber 
         else if (this.state.phonenumber && this.state.phonenumber.length < 10) {
             alert("phonenumber must be greater than or equal to 10!");
             isValid = false;
         }
 
+        // check validate gender
         else if (!this.state.gender) {
             alert("Gender can't be blank!");
             isValid = false;
         }
+
+        // check validate position
         else if (!this.state.position) {
             alert("Position can't be blank!");
             isValid = false;
         }
+
+        // check validate roleid
         else if (!this.state.role) {
             alert("Role can't be blank!");
             isValid = false;
         }
+
+        // check validate avatar
         else if (!this.state.avatar) {
             alert("Avatar can't be blank!");
             isValid = false;
@@ -243,6 +252,7 @@ class UserRedux extends Component {
 
     // handle edit user
     handleEditUserFromParent = (user) => {
+        console.log(user)
         let imageBase64 = '';
         if (user.image) {
             imageBase64 = new Buffer(user.image, 'base64').toString('binary');
@@ -257,7 +267,7 @@ class UserRedux extends Component {
             gender: user.gender,
             position: user.positionId,
             role: user.roleId,
-            avatar: '',
+            avatar: user.image,
             action: CRUD_ACTION.EDIT,
             userEditId: user.id,
             previewImg: imageBase64
@@ -425,25 +435,22 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
-        emailRedux: state.admin.emails,
         positionRedux: state.admin.position,
         roleRedux: state.admin.roles,
         isLoadingGender: state.admin.isloadingGender,
-        userList: state.admin.users
+        userList: state.admin.users,
+        user: state.admin.users
 
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getEmailStart: () => dispatch(action.fetchEmailStart()),
         getGenderStart: () => dispatch(action.fetchGenderStart()),
         getPositionStart: () => dispatch(action.fetchPositionStart()),
         getRoleStart: () => dispatch(action.fetchRoleStart()),
         createNewUser: (data) => dispatch(action.createNewUser(data)),
         editAUser: (data) => dispatch(action.editAUser(data)),
-        /* fetchUserRedux: () => dispatch( action.fetchAllUserStart() ),
- */
         /* processLogout: () => dispatch( actions.processLogout() ),*/
         changeLanguageApp: (language) => dispatch(action.changeLanguage(language)) // truyền action 
     };

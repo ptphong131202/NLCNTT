@@ -5,6 +5,7 @@ import "./ProfessionalDoctor.scss";
 import * as actions from "../../../store/actions";
 import ImageProfessionalDoctor from "../../../assets/113208-cot-song.jpg"
 import { LANGUAGE } from "../../../utils"
+import { FormattedMessage } from 'react-intl'; // fomat language
 class ProfessionalDoctor extends Component {
     constructor(props) {
         super();
@@ -33,8 +34,8 @@ class ProfessionalDoctor extends Component {
                 <div className='Section ProfessionalDoctor'>
                     <div className='section-content '>
                         <div className='section-content-header'>
-                            <div className='section-header-name'>Bác sĩ chuyên nghiệp nổi bật</div>
-                            <div className='section-header-navi'>Tìm kiếm</div>
+                            <div className='section-header-name'><FormattedMessage id="homePage.out-standing-doctor" /></div>
+                            <div className='section-header-navi'><FormattedMessage id="homePage.more-info" /></div>
                         </div>
                         <Slider {...this.props.settings}>
 

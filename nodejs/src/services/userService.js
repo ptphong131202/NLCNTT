@@ -245,19 +245,6 @@ let getAllCode = (typeInput) => {
     })
 }
 
-let getAllEmail = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let emails = await db.User.findAll({
-                where: { type: "email" }
-            })
-            resolve(emails);
-        }
-        catch (e) {
-            reject(e);
-        }
-    })
-}
 
 module.exports = {
     handleUserLogin: handleUserLogin,
@@ -267,5 +254,4 @@ module.exports = {
     deleteUser: deleteUser,
     updateUserData: updateUserData,
     getAllCode: getAllCode,
-    getAllEmail: getAllEmail,
 }

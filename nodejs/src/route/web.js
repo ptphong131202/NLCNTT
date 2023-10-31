@@ -24,8 +24,6 @@ let initWebRoutes = (app) => {
     router.post('/api/create-new-user', userController.handleCreateNewUser);
     router.put('/api/edit-user', userController.handleEditUser);
     router.delete('/api/delete-user', userController.handleDeleteUser);
-    // get check email from form signup
-    router.get("/api/get-email", userController.getEmail);
     // route table allcode
     router.get("/api/allcode", userController.getAllCode);
     // route get doctor home page

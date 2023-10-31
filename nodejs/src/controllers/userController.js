@@ -84,15 +84,7 @@ let getAllCode = async (req, res) => {
     }
 }
 
-let getEmail = async (req, res) => {
-    try {
-        let emails = await userService.getAllEmail();
-        return res.status(200).json(emails);
-    }
-    catch (e) {
-        console.log(e);
-    }
-}
+
 
 
 
@@ -103,5 +95,4 @@ module.exports = {
     handleEditUser: handleEditUser,
     handleDeleteUser: handleDeleteUser,
     getAllCode: getAllCode,
-    getEmail: getEmail
 }

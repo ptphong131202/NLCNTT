@@ -11,17 +11,14 @@ import HandBook from "./Section/HandBook.js"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./HomePage.scss";
-class HomePage extends Component
-{
-
-    render ()
-    {
+class HomePage extends Component {
+    render() {
         var settings = {
             dots: false,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 4,
-            slidesToScroll: 1
+            slidesToScroll: 1,
         };
         return (
             <React.Fragment>
@@ -38,17 +35,15 @@ class HomePage extends Component
 
 }
 
-const mapStateToProps = state =>
-{
+const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn
     };
 };
 
-const mapDispatchToProps = dispatch =>
-{
+const mapDispatchToProps = dispatch => {
     return {
     };
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( HomePage );
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -11,7 +11,6 @@
         "help": "Help",
         "welcome": "Welcome"
     },
-
     "banner": {
         "medicalfoundation": "MEDICAL FOUNDATION",
         "healthcare": "HOLISTIC HEALTH CARE",
@@ -46,7 +45,6 @@
         "sum": "Sum",
         "date-range-invalid": "Date range invalid"
     },
-
     "menu": {
         "admin": {
             "manage-user": "User",
@@ -60,8 +58,6 @@
             "manage-specialty": "Manage-specialty",
             "handbook": "Handbook",
             "manage-handbook": "Manage-handbook"
-
-
         }
     },
     "manage-user": {
@@ -76,7 +72,9 @@
         "image": "Image",
         "add": "Add",
         "edit": "Save Change"
-
+    },
+    "homePage": {
+        "out-standing-doctor": "Last week's featured doctor",
+        "more-info": "More infor"
     }
-
 }
