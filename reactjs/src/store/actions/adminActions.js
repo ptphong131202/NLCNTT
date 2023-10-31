@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllcodeService, createNewUserService, getAllUser, deleteUserService, editUserService, getTopDoctorHomeService } from '../../services/userService';
+import { getAllcodeService, createNewUserService, getAllUser, deleteUserService, editUserService, getTopDoctorHomeService, getAllEmail } from '../../services/userService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -125,8 +125,6 @@ export const fetchAllUserStart = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllUser("ALL");
-            let res1 = await getTopDoctorHomeService('');
-            console.log(res1);
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUserSuccess(res.users.reverse()));
             }
@@ -213,3 +211,56 @@ export const updateUserSuccess = () => ({
 export const updateUserFailed = () => ({
     type: actionTypes.EDIT_USER_FAILED
 })
+
+export const fetchTopDoctorHome = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopDoctorHomeService('5');
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTOR_USERS_SUCCESS,
+                    dataDoctors: res.data
+                });
+            }
+            else {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTOR_USERS_FAILED
+                });
+            }
+        }
+        catch (err) {
+            console.log(err);
+            dispatch({
+                type: actionTypes.FETCH_TOP_DOCTOR_USERS_FAILED
+            });
+        }
+    }
+}
+
+
+export const fetchEmailStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_EMAIL_START });
+            let res = await getAllEmail();
+            console.log("Check all email: ", res)
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_EMAIL_SUCCESS,
+                    dataDoctors: res.data
+                });
+            }
+            else {
+                dispatch({
+                    type: actionTypes.FETCH_EMAIL_FAILED,
+                });
+            }
+        }
+        catch (err) {
+            dispatch({
+                type: actionTypes.FETCH_EMAIL_FAILED,
+            });
+            console.log(err);
+        }
+    }
+}

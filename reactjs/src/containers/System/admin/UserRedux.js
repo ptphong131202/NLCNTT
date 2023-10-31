@@ -26,6 +26,7 @@ class UserRedux extends Component {
             genderArr: [],
             positionArr: [],
             roleArr: [],
+            emailArr: [],
             previewImg: "",
             isOpen: false,
             email: '',
@@ -50,7 +51,7 @@ class UserRedux extends Component {
             let arrGender = this.props.genderRedux;
             this.setState({
                 genderArr: arrGender,
-                gender: arrGender && arrGender.length > 0 ? arrGender[0].key : ''
+                gender: arrGender && arrGender.length > 0 ? arrGender[0].keyMap : ''
             })
         }
 
@@ -59,7 +60,7 @@ class UserRedux extends Component {
             let arrPosition = this.props.positionRedux;
             this.setState({
                 positionArr: arrPosition,
-                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].key : ""
+                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].keyMap : ""
             })
         }
 
@@ -68,7 +69,14 @@ class UserRedux extends Component {
             let arrRole = this.props.roleRedux;
             this.setState({
                 roleArr: arrRole,
-                role: arrRole && arrRole.length > 0 ? arrRole[0].key : ''
+                role: arrRole && arrRole.length > 0 ? arrRole[0].keyMap : ''
+            })
+        }
+        //email 
+        if (prevProps.emailRedux !== this.props.emailRedux) {
+            let arrEmail = this.props.emailRedux;
+            this.setState({
+                emailArr: arrEmail,
             })
         }
 
@@ -83,9 +91,9 @@ class UserRedux extends Component {
                 lastName: '',
                 phonenumber: '',
                 address: '',
-                gender: arrGender && arrGender.length > 0 ? arrGender[0].key : '',
-                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].key : "",
-                role: arrRole && arrRole.length > 0 ? arrRole[0].key : '',
+                gender: arrGender && arrGender.length > 0 ? arrGender[0].keyMap : '',
+                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].keyMap : "",
+                role: arrRole && arrRole.length > 0 ? arrRole[0].keyMap : '',
                 avatar: '',
                 action: CRUD_ACTION.CREATE,
                 previewImg: ''
@@ -100,6 +108,7 @@ class UserRedux extends Component {
         this.props.getPositionStart();
         this.props.getRoleStart();
         this.props.createNewUser();
+        this.props.getEmailStart();
     }
 
     // event in img for input file 
@@ -132,6 +141,7 @@ class UserRedux extends Component {
         let { action } = this.state;
         if (action === CRUD_ACTION.CREATE) {
             // fire redux action
+            console.log(this.state)
             this.props.createNewUser({
                 email: this.state.email,
                 password: this.state.password,
@@ -166,14 +176,61 @@ class UserRedux extends Component {
     // validate input
     checkValidateInput = () => {
         let isValid = true;
-        let arrCheck = ["email", "password", "lastName", "firstName", "phonenumber", "address"];
-        for (let i = 0; i < arrCheck.length; i++) {
-            if (!this.state[arrCheck[i]]) {
-                isValid = true;
-                alert("This input is required: " + arrCheck[i] + "!");
-                break;
-            }
+        // check validate email
+        let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (!this.state.email) {
+            alert("Email address can't be blank!");
+            isValid = false;
         }
+        else if (this.state.email && reg.test(this.state.email) == false) {
+            alert("Invalid Email address!");
+            isValid = false;
+        }
+
+        // check validate password
+        else if (!this.state.password) {
+            alert("Password can't be blank!");
+            isValid = false;
+        }
+        else if (this.state.password && this.state.password.length < 8) {
+            alert("Password must be greater than or equal to 8!");
+            isValid = false;
+        }
+
+        // check validate lastName 
+        else if (this.state.lastName && this.state.lastName.length < 1) {
+            alert("lastName must be greater than or equal to 1!");
+            isValid = false;
+        }
+
+        // check validate firstName 
+        else if (this.state.firstName && this.state.firstName.length < 1) {
+            alert("firstName must be greater than or equal to 1!");
+            isValid = false;
+        }
+        // check validate phonenumber 
+        else if (this.state.phonenumber && this.state.phonenumber.length < 10) {
+            alert("phonenumber must be greater than or equal to 10!");
+            isValid = false;
+        }
+
+        else if (!this.state.gender) {
+            alert("Gender can't be blank!");
+            isValid = false;
+        }
+        else if (!this.state.position) {
+            alert("Position can't be blank!");
+            isValid = false;
+        }
+        else if (!this.state.role) {
+            alert("Role can't be blank!");
+            isValid = false;
+        }
+        else if (!this.state.avatar) {
+            alert("Avatar can't be blank!");
+            isValid = false;
+        }
+
         return isValid;
     }
     onChangeInput = (event, id) => {
@@ -208,6 +265,7 @@ class UserRedux extends Component {
     }
 
     render() {
+        console.log(this.state)
         let genders = this.state.genderArr;
         let positions = this.state.positionArr;
         let roles = this.state.roleArr;
@@ -272,7 +330,7 @@ class UserRedux extends Component {
                                 </div>
                                 <div className="form-group pt-2 col-3">
                                     <label htmlFor="phonenumber"><FormattedMessage id="manage-user.phonenumber" /></label>
-                                    <input type="text"
+                                    <input type="tel"
                                         className="form-control"
                                         id="phonenumber" placeholder="Tên"
                                         value={phonenumber}
@@ -295,7 +353,7 @@ class UserRedux extends Component {
                                         onChange={(event) => { this.onChangeInput(event, "gender") }}>
                                         {genders && genders.length > 0 && genders.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
+                                                <option key={index} value={item.keyMap}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
                                             )
                                         })}
                                     </select>
@@ -307,7 +365,7 @@ class UserRedux extends Component {
                                         onChange={(event) => { this.onChangeInput(event, "position") }}>
                                         {positions && positions.length > 0 && positions.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
+                                                <option key={index} value={item.keyMap}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
                                             )
                                         })}
                                     </select>
@@ -319,7 +377,7 @@ class UserRedux extends Component {
                                         onChange={(event) => { this.onChangeInput(event, "role") }}>
                                         {roles && roles.length > 0 && roles.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
+                                                <option key={index} value={item.keyMap}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
                                             )
                                         })}
                                     </select>
@@ -367,6 +425,7 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
+        emailRedux: state.admin.emails,
         positionRedux: state.admin.position,
         roleRedux: state.admin.roles,
         isLoadingGender: state.admin.isloadingGender,
@@ -377,6 +436,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        getEmailStart: () => dispatch(action.fetchEmailStart()),
         getGenderStart: () => dispatch(action.fetchGenderStart()),
         getPositionStart: () => dispatch(action.fetchPositionStart()),
         getRoleStart: () => dispatch(action.fetchRoleStart()),

@@ -116,6 +116,7 @@ let getAllUser = (userId) => {
     })
 }
 
+
 let createNewUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -126,34 +127,23 @@ let createNewUser = (data) => {
                     errMessage: `Your's Email is already exist in our system, plz try other email`
                 });
             }
-            if (user.email && user.firstName && user.lastName
-                && user.address && user.phonenumber &&
-                user.gender && user.positionId && user.avatar) {
-
-                let hashPassWordFromBcrypt = await hashUserPassword(data.password)
-                await db.User.create({
-                    email: data.email,
-                    password: hashPassWordFromBcrypt,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    address: data.address,
-                    phonenumber: data.phonenumber,
-                    gender: data.gender,
-                    roleId: data.roleId,
-                    positionId: data.positionId,
-                    image: data.avatar
-                })
-                resolve({
-                    errCode: 0,
-                    errMessage: 'Create new user succeed',
-                })
-            }
-            else {
-                resolve({
-                    errCode: 1,
-                    errMessage: `Your's Email is already exist in our system, plz try other email`
-                });
-            }
+            let hashPassWordFromBcrypt = await hashUserPassword(data.password)
+            await db.User.create({
+                email: data.email,
+                password: hashPassWordFromBcrypt,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                address: data.address,
+                phonenumber: data.phonenumber,
+                gender: data.gender,
+                roleId: data.roleId,
+                positionId: data.positionId,
+                image: data.avatar
+            })
+            resolve({
+                errCode: 0,
+                errMessage: 'Create new user succeed',
+            })
         }
         catch (err) {
             reject(err);
@@ -255,6 +245,20 @@ let getAllCode = (typeInput) => {
     })
 }
 
+let getAllEmail = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let emails = await db.User.findAll({
+                where: { type: "email" }
+            })
+            resolve(emails);
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
@@ -263,4 +267,5 @@ module.exports = {
     deleteUser: deleteUser,
     updateUserData: updateUserData,
     getAllCode: getAllCode,
+    getAllEmail: getAllEmail,
 }
