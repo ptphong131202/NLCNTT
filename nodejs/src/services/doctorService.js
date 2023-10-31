@@ -28,6 +28,56 @@ let getTopDoctorHome = (limitInput) => {
     })
 }
 
+let getAllDoctor = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctors = await db.User.findAll({
+                where: { roleId: "R2" },
+                attribute: {
+                    exclude: ["password", "image"]
+                }
+            })
+            resolve({
+                errCode: 0,
+                data: doctors
+            })
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let saveInforDoctor = (dataInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!dataInput.doctorId || !dataInput.contentHTML || !dataInput.contentMarkdown) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing paramiter!"
+                })
+            }
+            else {
+                await db.Markdowns.create({
+                    contentHTML: dataInput.contentHTML,
+                    ContentMarkdown: dataInput.contentMarkdown,
+                    description: dataInput.description,
+                    doctorId: dataInput.doctorId,
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: "Save information doctor success!"
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
+    getAllDoctor: getAllDoctor,
+    saveInforDoctor: saveInforDoctor
 }

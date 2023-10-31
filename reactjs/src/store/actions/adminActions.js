@@ -1,5 +1,9 @@
 import actionTypes from './actionTypes';
-import { getAllcodeService, createNewUserService, getAllUser, deleteUserService, editUserService, getTopDoctorHomeService, getAllEmail } from '../../services/userService';
+import {
+    getAllcodeService, createNewUserService,
+    getAllUser, deleteUserService, editUserService,
+    getTopDoctorHomeService, getAllDoctor, saveDetailDoctor
+} from '../../services/userService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -238,29 +242,59 @@ export const fetchTopDoctorHome = () => {
 }
 
 
-export const fetchEmailStart = () => {
+
+export const fetchAllDoctor = () => {
     return async (dispatch, getState) => {
         try {
-            dispatch({ type: actionTypes.FETCH_EMAIL_START });
-            let res = await getAllEmail();
-            console.log("Check all email: ", res)
+            let res = await getAllDoctor();
             if (res && res.errCode === 0) {
                 dispatch({
-                    type: actionTypes.FETCH_EMAIL_SUCCESS,
-                    dataDoctors: res.data
+                    type: actionTypes.FETCH_ALL_DOCTOR_USERS_SUCCESS,
+                    dataAllDoctor: res.data
                 });
             }
             else {
                 dispatch({
-                    type: actionTypes.FETCH_EMAIL_FAILED,
+                    type: actionTypes.FETCH_ALL_DOCTOR_USERS_FAILED
                 });
             }
         }
         catch (err) {
-            dispatch({
-                type: actionTypes.FETCH_EMAIL_FAILED,
-            });
             console.log(err);
+            dispatch({
+                type: actionTypes.FETCH_ALL_DOCTOR_USERS_FAILED
+            });
         }
     }
 }
+
+
+
+export const saveInforDetailDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveDetailDoctor(data);
+            if (res && res.errCode === 0) {
+                toast.success("Save information doctor success!");
+                dispatch({
+                    type: actionTypes.SAVE_DOCTOR_INFOR_SUCCESS,
+                });
+            }
+            else {
+                console.log("errror 1: ", res);
+                toast.error("Save information doctor error!");
+                dispatch({
+                    type: actionTypes.SAVE_DOCTOR_INFOR_FAILED
+                });
+            }
+        }
+        catch (err) {
+            console.log(err);
+            toast.error("Save information doctor success!");
+            dispatch({
+                type: actionTypes.SAVE_DOCTOR_INFOR_FAILED
+            });
+        }
+    }
+}
+
