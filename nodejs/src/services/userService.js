@@ -254,4 +254,5 @@ module.exports = {
     deleteUser: deleteUser,
     updateUserData: updateUserData,
     getAllCode: getAllCode,
+
 }

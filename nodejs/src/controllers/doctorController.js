@@ -62,9 +62,44 @@ let getDetialDoctor = async (req, res) => {
         })
     }
 }
+
+
+let postBulkCreateSchedule = async (req, res) => {
+    try {
+        let infor = await doctorSevice.bulkCreateSchedule(req.body);
+        return res.status(200).json(infor);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from the serser!"
+        })
+    }
+}
+
+let getScheduleDoctorById = async (req, res) => {
+    try {
+
+        let infor = await doctorSevice.getScheduleDoctorDate(req.query.doctorId, req.query.date);
+        return res.status(200).json(infor);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from the serser!"
+        })
+    }
+}
+
+
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
     postInforDoctor: postInforDoctor,
-    getDetialDoctor: getDetialDoctor
+    getDetialDoctor: getDetialDoctor,
+    postBulkCreateSchedule: postBulkCreateSchedule,
+    getScheduleDoctorById: getScheduleDoctorById
 }
