@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Slider from "react-slick";
 import "./ProfessionalDoctor.scss";
 import * as actions from "../../../store/actions";
-import ImageProfessionalDoctor from "../../../assets/113208-cot-song.jpg"
 import { LANGUAGE } from "../../../utils"
 import { FormattedMessage } from 'react-intl'; // fomat language
 import { withRouter } from 'react-router';

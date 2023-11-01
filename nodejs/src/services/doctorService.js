@@ -17,7 +17,6 @@ let getTopDoctorHome = (limitInput) => {
                 raw: true,
                 nest: true
             })
-            console.log("check user 222: ", users)
             resolve({
                 errCode: 0,
                 data: users
