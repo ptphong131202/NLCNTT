@@ -13,11 +13,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import "./ManageDoctor.scss"
 import { getDetailInforDoctor } from '../../../services/userService';
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
+
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 

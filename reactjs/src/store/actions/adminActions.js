@@ -298,3 +298,29 @@ export const saveInforDetailDoctor = (data) => {
     }
 }
 
+
+
+export const fetchAllScheduleHour = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllcodeService("TIME");
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+                    dataTime: res.data
+                });
+            }
+            else {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED
+                });
+            }
+        }
+        catch (err) {
+            console.log(err);
+            dispatch({
+                type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED
+            });
+        }
+    }
+}
