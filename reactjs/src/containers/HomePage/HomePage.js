@@ -22,7 +22,7 @@ class HomePage extends Component {
         };
         return (
             <React.Fragment>
-                <div> <HomeHeader />
+                <div> <HomeHeader isShowBanner={true} />
                     <Specialty settings={settings} />
                     <ProfessionalDoctor settings={settings} />
                     <HealthFacility settings={settings} />

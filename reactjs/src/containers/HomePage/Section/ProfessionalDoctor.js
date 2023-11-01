@@ -6,6 +6,7 @@ import * as actions from "../../../store/actions";
 import ImageProfessionalDoctor from "../../../assets/113208-cot-song.jpg"
 import { LANGUAGE } from "../../../utils"
 import { FormattedMessage } from 'react-intl'; // fomat language
+import { withRouter } from 'react-router';
 class ProfessionalDoctor extends Component {
     constructor(props) {
         super();
@@ -24,6 +25,12 @@ class ProfessionalDoctor extends Component {
     }
     componentDidMount() {
         this.props.loadTopDoctors();
+    }
+
+    handleViewDetailDoctor = (doctor) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-doctor/${doctor.id}`);
+        }
     }
     render() {
         let arrDoctors = this.state.arrDoctor;
@@ -46,7 +53,7 @@ class ProfessionalDoctor extends Component {
                                 }
                                 let namevi = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`
                                 let namen = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`
-                                return (<div className='section-list-ck' >
+                                return (<div className='section-list-ck' key={index} onClick={() => this.handleViewDetailDoctor(item)}>
                                     <div className='section-list imgProfessionalDoctor'>
                                         <div className='section-list-img'>
                                             <img className='imgProfessionalDoctor' src={imageBase64} />
@@ -84,4 +91,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfessionalDoctor));

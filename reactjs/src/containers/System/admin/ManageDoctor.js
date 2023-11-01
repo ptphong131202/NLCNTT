@@ -12,7 +12,7 @@ import MdEditor from 'react-markdown-editor-lite';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import "./ManageDoctor.scss"
-
+import { getDetailInforDoctor } from '../../../services/userService';
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -31,7 +31,9 @@ class ManageDoctor extends Component {
             contentHTML: '',
             selectedDoctor: '',
             discription: '',
-            listDoctor: []
+            listDoctor: [],
+            hasOldData: false,
+            action: ''
         }
     }
 
@@ -79,22 +81,40 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log("Check selectDoctor Id: ", this.state)
+        let { hasOldData } = this.state;
         this.props.saveInforDetailDoctor({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             discription: this.state.discription,
-            doctorId: this.state.selectedDoctor.value
+            doctorId: this.state.selectedDoctor.value,
+            action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE
         })
         console.log("check state content Markdown: ", this.state);
     }
-    handleChange = (selectedDoctor) => {
-        this.setState({
-            selectedDoctor
-        },
-            () =>
-                console.log(`Option selected:`, this.state.selectedDoctor)
-        );
+    handleChangeSelect = async (selectedDoctor) => {
+        this.setState({ selectedDoctor });
+
+        let res = await getDetailInforDoctor(selectedDoctor.value);
+        console.log(res.data.Markdown);
+        if (res && res.data && res.data.Markdown) {
+            let markdown = res.data.Markdown;
+            console.log("mark: ", markdown.description);
+            this.setState({
+                contentHTML: markdown.contentHTML,
+                contentMarkdown: markdown.ContentMarkdown,
+                discription: markdown.description,
+                hasOldData: true
+            })
+        }
+        else {
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                discription: '',
+                hasOldData: false
+            })
+        }
+        console.log("check ress: ", res);
     };
     handleOnchangeDescription = (event) => {
         this.setState({
@@ -103,7 +123,6 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        console.log("this.state.listDoctor: ", this.state.listDoctor)
         return (
             < React.Fragment >
                 <div className='container manage-doctor ' >
@@ -113,7 +132,7 @@ class ManageDoctor extends Component {
                             <label>Chọn bác sĩ:  </label>
                             <Select
                                 value={this.state.selectedDoctor}
-                                onChange={this.handleChange}
+                                onChange={this.handleChangeSelect}
                                 options={this.state.listDoctor}
                             />
                         </div>
@@ -122,7 +141,7 @@ class ManageDoctor extends Component {
                             <textarea className='form-control'
                                 onChange={(event) => this.handleOnchangeDescription(event)}
                                 value={this.state.discription}
-                                rows={4} cols={4}>
+                                rows={4}>
                             </textarea>
                         </div>
 
@@ -131,13 +150,15 @@ class ManageDoctor extends Component {
                         <MdEditor
                             style={{ height: '400px' }}
                             renderHTML={text => mdParser.render(text)}
-                            onChange={this.handleEditorChange} />
+                            onChange={this.handleEditorChange}
+                            value={this.state.contentMarkdown}
+                        />
                     </div>
                     <p className='text-center py-3'>
                         <button
-                            className='save-content-doctor'
+                            className={this.state.hasOldData === true ? 'save-content-doctor' : 'create-content-doctor'}
                             onClick={() => this.handleSaveContentMarkdown()}
-                        >Lưu thông tin</button>
+                        >{this.state.hasOldData === true ? `Lưu thông tin` : `Thêm thông tin`}</button>
                     </p>
                 </div>
             </React.Fragment>
