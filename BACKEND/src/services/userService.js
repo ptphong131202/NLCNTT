@@ -128,22 +128,38 @@ let createNewUser = (data) => {
                 });
             }
             let hashPassWordFromBcrypt = await hashUserPassword(data.password)
-            await db.User.create({
-                email: data.email,
-                password: hashPassWordFromBcrypt,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                address: data.address,
-                phonenumber: data.phonenumber,
-                gender: data.gender,
-                roleId: data.roleId,
-                positionId: data.positionId,
-                image: data.avatar
-            })
-            resolve({
-                errCode: 0,
-                errMessage: 'Create new user succeed',
-            })
+            if (!data.email
+                || !data.firstName
+                || !data.lastName
+                || !data.address
+                || !data.phonenumber
+                || !data.gender
+                || !data.roleId
+                || !data.positionId
+                || !data.avatar) {
+                resolve({
+                    errCode: 2,
+                    errMessage: 'Not in valid!'
+                })
+            }
+            else {
+                await db.User.create({
+                    email: data.email,
+                    password: hashPassWordFromBcrypt,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phonenumber: data.phonenumber,
+                    gender: data.gender,
+                    roleId: data.roleId,
+                    positionId: data.positionId,
+                    image: data.avatar
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Create new user succeed',
+                })
+            }
         }
         catch (err) {
             reject(err);

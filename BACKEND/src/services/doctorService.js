@@ -160,7 +160,7 @@ let getDetialDoctorbyid = (inputId) => {
                         {
                             model: db.Doctor_infor,
                             attributes: {
-                                exclude: ['id', "doctorId"]
+                                exclude: ['id']
                             },
                             include: [
                                 { model: db.Allcode, as: 'priceIdData', attributes: ['valueEn', 'valueVi'] },
@@ -253,7 +253,7 @@ let getScheduleDoctorDate = (doctorId, date) => {
                         date: date
                     },
                     attributes: {
-                        exclude: ['id', "doctorId"]
+                        exclude: ['id']
                     },
                     include: [
                         { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] }
@@ -311,6 +311,33 @@ let getExtraInforDoctor = (doctorId) => {
         }
     })
 }
+
+let getProfileDoctor = (doctorId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required paramiter!"
+                })
+            }
+            else {
+                let data = await db.Doctor_infor.findOne({
+                    where: {
+                        doctorId: doctorId
+                    },
+                    attributes: {
+                        exclude: ['password',]
+                    },
+
+                });
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    });
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
@@ -318,6 +345,7 @@ module.exports = {
     getDetialDoctorbyid: getDetialDoctorbyid,
     bulkCreateSchedule: bulkCreateSchedule,
     getScheduleDoctorDate: getScheduleDoctorDate,
-    getExtraInforDoctor: getExtraInforDoctor
+    getExtraInforDoctor: getExtraInforDoctor,
+    getProfileDoctor: getProfileDoctor
 
 }

@@ -81,7 +81,7 @@ let postBulkCreateSchedule = async (req, res) => {
 let getScheduleDoctorById = async (req, res) => {
     try {
 
-        let infor = await doctorSevice.getScheduleDoctorDate(req.query.doctorId, req.query.date);
+        let infor = await doctorSevice.getScheduleDoctorDate(req.query.doctorId);
         return res.status(200).json(infor);
     }
     catch (e) {
@@ -108,6 +108,21 @@ let getExtraInforDoctorById = async (req, res) => {
     }
 }
 
+let getProfileDoctorById = async (req, res) => {
+    try {
+
+        let infor = await doctorSevice.getProfileDoctor(req.query.doctorId);
+        return res.status(200).json(infor);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from the serser!"
+        })
+    }
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
@@ -115,5 +130,6 @@ module.exports = {
     getDetialDoctor: getDetialDoctor,
     postBulkCreateSchedule: postBulkCreateSchedule,
     getScheduleDoctorById: getScheduleDoctorById,
-    getExtraInforDoctorById: getExtraInforDoctorById
+    getExtraInforDoctorById: getExtraInforDoctorById,
+    getProfileDoctorById: getProfileDoctorById
 }

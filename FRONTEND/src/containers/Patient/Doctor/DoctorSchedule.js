@@ -19,7 +19,9 @@ class DoctorSchedule extends Component {
         super(props);
         this.state = {
             allDays: [],
-            allAvableTime: []
+            allAvableTime: [],
+            isOpenModalBooking: false,
+            dataScheduleTimeModal: {}
         };
     }
 
@@ -99,6 +101,17 @@ class DoctorSchedule extends Component {
             }
         }
     }
+    handleClickScheduleTime = (time) => {
+        this.setState({
+            isOpenModalBooking: true,
+            dataScheduleTimeModal: time
+        })
+    }
+    closeBookingModal = () => {
+        this.setState({
+            isOpenModalBooking: false,
+        })
+    }
     render() {
         let { allAvableTime } = this.state;
         let { language } = this.props;
@@ -124,7 +137,11 @@ class DoctorSchedule extends Component {
                                     allAvableTime.map((item, index) => {
                                         let timeDisplay = language === LANGUAGE.VI ? item.timeTypeData.valueVi : item.timeTypeData.valueEn;
                                         return (
-                                            <button className={language === LANGUAGE.VI ? 'minWith1' : 'minWith2'} key={index}>{timeDisplay}</button>
+                                            <button
+                                                className={language === LANGUAGE.VI ? 'minWith1' : 'minWith2'}
+                                                key={index}
+                                                onClick={() => this.handleClickScheduleTime(item)}
+                                            >{timeDisplay}</button>
                                         )
                                     })
                                     : <div className='py-3'><FormattedMessage id="patient.detail-doctor.no-schedule" /></div>
@@ -137,7 +154,9 @@ class DoctorSchedule extends Component {
 
 
                 <BookingModal
-
+                    isOpenModal={this.state.isOpenModalBooking}
+                    closeBookingModal={this.closeBookingModal}
+                    dataScheduleTimeModal={this.state.dataScheduleTimeModal}
                 />
             </React.Fragment>
         )

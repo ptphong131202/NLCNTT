@@ -102,7 +102,7 @@ class TableUserManage extends Component {
                     </table>
 
                 </div>
-                <div className='container'> <div className="markdown"><MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /></div></div>
+                {/* <div className='container'> <div className="markdown"><MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /></div></div> */}
             </React.Fragment>
         );
     }
