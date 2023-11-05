@@ -156,7 +156,20 @@ let getDetialDoctorbyid = (inputId) => {
                     include: [
                         { model: db.Markdowns, attributes: ['description', "contentHTML", "ContentMarkdown"] },
                         { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] },
-                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] }
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.Doctor_infor,
+                            attributes: {
+                                exclude: ['id', "doctorId"]
+                            },
+                            include: [
+                                { model: db.Allcode, as: 'priceIdData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'provinceIdData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'paymentIdData', attributes: ['valueEn', 'valueVi'] },
+
+                            ]
+                        },
+
                     ],
                     raw: false,
                     nest: true
@@ -164,6 +177,8 @@ let getDetialDoctorbyid = (inputId) => {
                 if (user && user.image) {
                     user.image = new Buffer(user.image, 'base64').toString('binary');
                 }
+
+                if (!user) user = {}
 
                 resolve({
                     errCode: 0,
@@ -237,6 +252,9 @@ let getScheduleDoctorDate = (doctorId, date) => {
                         doctorId: doctorId,
                         date: date
                     },
+                    attributes: {
+                        exclude: ['id', "doctorId"]
+                    },
                     include: [
                         { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] }
                     ],
@@ -256,12 +274,50 @@ let getScheduleDoctorDate = (doctorId, date) => {
         }
     })
 }
+
+let getExtraInforDoctor = (doctorId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required paramiter!"
+                })
+            }
+            else {
+                let data = await db.Doctor_infor.findOne({
+                    where: {
+                        doctorId: doctorId
+                    },
+                    include: [
+                        { model: db.Allcode, as: 'priceIdData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'provinceIdData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'paymentIdData', attributes: ['valueEn', 'valueVi'] },
+
+                    ],
+                    raw: false,
+                    nest: true
+                })
+
+                if (!data) data = {};
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
     saveInforDoctor: saveInforDoctor,
     getDetialDoctorbyid: getDetialDoctorbyid,
     bulkCreateSchedule: bulkCreateSchedule,
-    getScheduleDoctorDate: getScheduleDoctorDate
+    getScheduleDoctorDate: getScheduleDoctorDate,
+    getExtraInforDoctor: getExtraInforDoctor
 
 }

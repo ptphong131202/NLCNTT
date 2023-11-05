@@ -145,8 +145,8 @@ class ManageSchedule extends Component {
             doctorId: selectedDoctor.value,
             date: '' + formatedDate
         });
-
-        if (response && response.error === 0) {
+        console.log(response)
+        if (response && response.errCode === 0) {
             toast.success("Create schedule success!")
         }
         else {

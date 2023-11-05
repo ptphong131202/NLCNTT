@@ -5,6 +5,7 @@ import "./DetailDoctor.scss";
 import { LANGUAGE } from "../../../utils"
 import { getDetailInforDoctor } from '../../../services/userService';
 import DoctorSchedule from './DoctorSchedule';
+import DoctorExtraInfor from './DoctorExtraInfor';
 class DetailDoctor extends Component {
 
     constructor(props) {
@@ -41,6 +42,7 @@ class DetailDoctor extends Component {
             namevi = `${detailDoctor.positionData.valueVi},  ${detailDoctor.firstName} ${detailDoctor.lastName}`
             namen = `${detailDoctor.positionData.valueEn},  ${detailDoctor.firstName} ${detailDoctor.lastName}`
         }
+        console.log(this.state)
         return (
             <React.Fragment>
                 <HomeHeader isShowBanner={false} />
@@ -66,7 +68,10 @@ class DetailDoctor extends Component {
                                 <DoctorSchedule
                                     detailDoctor={this.state.currentDoctorId} />
                             </div>
-                            <div className='content-right'></div>
+                            <div className='content-right'>
+                                <DoctorExtraInfor detailDoctor={this.state.currentDoctorId} />
+
+                            </div>
                         </div>
                         <hr />
                         <div className='detail-infor'>

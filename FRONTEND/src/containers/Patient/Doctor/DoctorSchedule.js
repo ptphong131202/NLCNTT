@@ -10,6 +10,9 @@ import { getScheduleDoctorById } from '../../../services/userService';
 import moment, { lang } from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { locale } from 'moment';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
+import BookingModal from './Modal/BookingModal';
 class DoctorSchedule extends Component {
 
     constructor(props) {
@@ -100,36 +103,43 @@ class DoctorSchedule extends Component {
         let { allAvableTime } = this.state;
         let { language } = this.props;
         return (
-            <div className='container doctor-schedule'>
-                <div className='doctor-schedule-content'>
-                    <div className='all-schedule'>
-                        <select className={language === LANGUAGE.VI ? 'select active1' : 'select active2'} onChange={(event) => this.handleOnchangeSelect(event)}>
-                            {this.state.allDays && this.state.allDays.length > 0 && this.state.allDays.map((item, index) => {
-                                return (
-                                    <option className='option' key={index} value={item.value}>{item.label}</option>
-                                )
-                            })}
-                        </select>
-                    </div>
-                    <div className='all-available-time'>
-                        <div className='text-calender'>
-                            <span> <i className='fas fa-calendar-alt'></i> <FormattedMessage id="patient.detail-doctor.schedule" /></span>
-                        </div>
-                        <div className='time-content'>
-                            {allAvableTime && allAvableTime.length > 0 ?
-                                allAvableTime.map((item, index) => {
-                                    let timeDisplay = language === LANGUAGE.VI ? item.timeTypeData.valueVi : item.timeTypeData.valueEn;
+            <React.Fragment>
+                <div className='container doctor-schedule'>
+                    <div className='doctor-schedule-content'>
+                        <div className='all-schedule'>
+                            <select className={language === LANGUAGE.VI ? 'select active1' : 'select active2'} onChange={(event) => this.handleOnchangeSelect(event)}>
+                                {this.state.allDays && this.state.allDays.length > 0 && this.state.allDays.map((item, index) => {
                                     return (
-                                        <button className={language === LANGUAGE.VI ? 'minWith1' : 'minWith2'} key={index}>{timeDisplay}</button>
+                                        <option className='option' key={index} value={item.value}>{item.label}</option>
                                     )
-                                })
-                                : <div className='py-3'><FormattedMessage id="patient.detail-doctor.no-schedule" /></div>
-                            }
+                                })}
+                            </select>
                         </div>
-                        {allAvableTime && allAvableTime.length > 0 && <div className='my-3'>Đặt lịch miễn phí</div>}
+                        <div className='all-available-time'>
+                            <div className='text-calender'>
+                                <span> <i className='fas fa-calendar-alt'></i> <FormattedMessage id="patient.detail-doctor.schedule" /></span>
+                            </div>
+                            <div className='time-content'>
+                                {allAvableTime && allAvableTime.length > 0 ?
+                                    allAvableTime.map((item, index) => {
+                                        let timeDisplay = language === LANGUAGE.VI ? item.timeTypeData.valueVi : item.timeTypeData.valueEn;
+                                        return (
+                                            <button className={language === LANGUAGE.VI ? 'minWith1' : 'minWith2'} key={index}>{timeDisplay}</button>
+                                        )
+                                    })
+                                    : <div className='py-3'><FormattedMessage id="patient.detail-doctor.no-schedule" /></div>
+                                }
+                            </div>
+                            {allAvableTime && allAvableTime.length > 0 && <div className='mt-3'>Đặt lịch miễn phí</div>}
+                        </div>
                     </div>
                 </div>
-            </div>
+
+
+                <BookingModal
+
+                />
+            </React.Fragment>
         )
     }
 }
