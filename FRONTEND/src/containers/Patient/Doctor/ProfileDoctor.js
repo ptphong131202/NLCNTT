@@ -81,7 +81,6 @@ class ProfileDoctor extends Component {
     }
     render() {
         let profile = this.state.dataProfile;
-        console.log("check profile: ", this.props.time);
         let language = this.props;
         let Vi = LANGUAGE.VI;
         let pricevi = '', priceEn = '', namevi = '', namen = '';

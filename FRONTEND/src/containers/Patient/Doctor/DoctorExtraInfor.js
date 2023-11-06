@@ -20,37 +20,35 @@ class DoctorExtraInfor extends Component {
         };
     }
 
+    getExtra = async () => {
+        let res = await getExtraInforDoctorById(this.props.detailDoctor);
+        let { paymentIdData, priceIdData, provinceIdData } = res.data;
+        console.log(res.data.paymentIdData);
+        let payment = this.props.language === LANGUAGE.VI ? paymentIdData.valueVi : paymentIdData.valueEn;
+        let price = this.props.language === LANGUAGE.VI ? priceIdData.valueVi : priceIdData.valueEn;
+        let province = this.props.language === LANGUAGE.VI ? provinceIdData.valueVi : provinceIdData.valueEn;
+        this.setState({
+            addressclinic: res.data.addressClinic,
+            nameClicnic: res.data.nameClinic,
+            note: res.data.note,
+            Price: price,
+            Province: province,
+            Payment: payment
+        })
+    }
+
     componentDidUpdate = async (prevProps, prevState) => {
-        if (this.props.language !== prevState.language) {
-            let res = await getExtraInforDoctorById(this.props.detailDoctor);
-            let { paymentIdData, priceIdData, provinceIdData } = res.data;
-            let payment = this.props.language === LANGUAGE.VI ? paymentIdData.valueVi : paymentIdData.valueEn;
-            let price = this.props.language === LANGUAGE.VI ? priceIdData.valueVi : priceIdData.valueEn;
-            let province = this.props.language === LANGUAGE.VI ? provinceIdData.valueVi : provinceIdData.valueEn;
-            this.setState({
-                addressclinic: res.data.addressClinic,
-                nameClicnic: res.data.nameClinic,
-                note: res.data.note,
-                Price: price,
-                Province: province,
-                Payment: payment
-            })
-        }
+
         if (this.props.detailDoctor !== prevProps.detailDoctor) {
-            let res = await getExtraInforDoctorById(this.props.detailDoctor);
-            let { paymentIdData, priceIdData, provinceIdData } = res.data;
-            let payment = this.props.language === LANGUAGE.VI ? paymentIdData.valueVi : paymentIdData.valueEn;
-            let price = this.props.language === LANGUAGE.VI ? priceIdData.valueVi : priceIdData.valueEn;
-            let province = this.props.language === LANGUAGE.VI ? provinceIdData.valueVi : provinceIdData.valueEn;
-            this.setState({
-                addressclinic: res.data.addressClinic,
-                nameClicnic: res.data.nameClinic,
-                note: res.data.note,
-                Price: price,
-                Province: province,
-                Payment: payment
-            })
+            await this.getExtra();
+
         }
+
+        if (this.props.language !== prevProps.language) {
+            await this.getExtra();
+        }
+
+
     }
 
     showDetailInfor = (status) => {

@@ -175,7 +175,7 @@ class ManageSchedule extends Component {
                                         options={this.state.listDoctor}
                                     />
                                 </div>
-                                <div className='col-2 form-group'>
+                                <div className='col-6 form-group'>
                                     <label> <FormattedMessage id="manage-schedule.choose-date" /></label>
                                     <DatePicker className="form-control date"
                                         onChange={this.handleOnchangeDatePicker}
