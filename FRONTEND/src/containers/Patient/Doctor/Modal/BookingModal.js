@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import "./BookingModal.scss";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ProfileDoctor from '../ProfileDoctor';
+import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
+
 class BookingModal extends Component {
 
     constructor(props) {
@@ -19,7 +22,11 @@ class BookingModal extends Component {
 
 
     render() {
-        console.log(this.props.dataScheduleTimeModal)
+        let doctorId = '';
+        if (this.props.dataScheduleTimeModal && !_.isEmpty(this.props.dataScheduleTimeModal)) {
+            doctorId = this.props.dataScheduleTimeModal.doctorId;
+        }
+        console.log("check doctor id: ", doctorId);
         return (
             <div className='container bookingModal'>
                 <Modal isOpen={this.props.isOpenModal}
@@ -27,50 +34,66 @@ class BookingModal extends Component {
                     size='lg'
                     centered
                 >
-                    <div className='booking-madal-header'>
-                        <span className='left'>Thông tin đặt lịch khám bệnh</span>
-                        <span className='right'
-                            onClick={this.props.closeBookingModal}><i className='fas fa-times'></i></span>
-                    </div>
-                    <div className='booking-madal-body'>
-                        <div className='doctor-infor'>
-                            <ProfileDoctor />
+                    <div className='modal-content-booking'>
+                        <div className='booking-madal-header'>
+                            <span className='left'>
+                                <FormattedMessage id="admin.manage-schedule.infor-schedules">
+                                </FormattedMessage>
+                            </span>
+                            <span className='right'
+                                onClick={this.props.closeBookingModal}><i className='fas fa-times'></i></span>
                         </div>
-                        <div className='doctor-price'></div>
-                        <div className='row'>
-                            <div className='col-6'>
-                                <label>Họ Tên </label>
-                                <input className='form-control' />
+                        <div className='booking-madal-body'>
+                            <div className='doctor-infor'>
+                                <ProfileDoctor
+                                    doctorId={doctorId}
+                                    isOpenProfileDoctor={false}
+                                    time={this.props.dataScheduleTimeModal} />
                             </div>
-                            <div className='col-6'>
-                                <label>Số điện thoại </label>
-                                <input className='form-control' />
-                            </div>
-                            <div className='col-6'>
-                                <label>Email </label>
-                                <input className='form-control' />
-                            </div>
-                            <div className='col-6'>
-                                <label>Địa chỉ liên hệ </label>
-                                <input className='form-control' />
-                            </div>
-                            <div className='col-6'>
-                                <label>Giới tính</label>
-                                <input className='form-control' />
-                            </div>
-                            <div className='col-6'>
-                                <label>Đặt cho ai </label>
-                                <input className='form-control' />
-                            </div>
-                            <div className='col-12'>
-                                <label>Lý do khám</label>
-                                <input className='form-control' />
+                            <div className='doctor-price'></div>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <label><FormattedMessage id="admin.manage-schedule.name">
+                                    </FormattedMessage> </label>
+                                    <input className='form-control' />
+                                </div>
+                                <div className='col-6'>
+                                    <label><FormattedMessage id="admin.manage-schedule.phone">
+                                    </FormattedMessage> </label>
+                                    <input className='form-control' />
+                                </div>
+                                <div className='col-6'>
+                                    <label>Email </label>
+                                    <input className='form-control' />
+                                </div>
+                                <div className='col-6'>
+                                    <label><FormattedMessage id="admin.manage-schedule.address">
+                                    </FormattedMessage> </label>
+                                    <input className='form-control' />
+                                </div>
+                                <div className='col-6'>
+                                    <label><FormattedMessage id="admin.manage-schedule.gender">
+                                    </FormattedMessage></label>
+                                    <input className='form-control' />
+                                </div>
+                                <div className='col-6'>
+                                    <label><FormattedMessage id="admin.manage-schedule.who">
+                                    </FormattedMessage> </label>
+                                    <input className='form-control' />
+                                </div>
+                                <div className='col-12'>
+                                    <label><FormattedMessage id="admin.manage-schedule.reason">
+                                    </FormattedMessage></label>
+                                    <input className='form-control' />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='booking-madal-footer'>
-                        <button className='btn-booking-confirm'>Xác nhận</button>
-                        <button className='btn-booking-cancel'>cancel</button>
+                        <div className='booking-madal-footer'>
+                            <button className='btn-booking-confirm'><FormattedMessage id="admin.manage-schedule.confirm">
+                            </FormattedMessage></button>
+                            <button className='btn-booking-cancel' onClick={this.props.closeBookingModal}><FormattedMessage id="admin.manage-schedule.cancel">
+                            </FormattedMessage></button>
+                        </div>
                     </div>
                 </Modal>
             </div>

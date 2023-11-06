@@ -81,7 +81,7 @@ let postBulkCreateSchedule = async (req, res) => {
 let getScheduleDoctorById = async (req, res) => {
     try {
 
-        let infor = await doctorSevice.getScheduleDoctorDate(req.query.doctorId);
+        let infor = await doctorSevice.getScheduleDoctorDate(req.query.doctorId, req.query.date);
         return res.status(200).json(infor);
     }
     catch (e) {

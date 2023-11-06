@@ -1,6 +1,5 @@
-.modal-content {
-    height: 500px;
-    display: flex;
+.modal-content-booking {
+    height: 100%;
 
     .booking-madal-header {
         height: 50px;
@@ -9,10 +8,11 @@
         align-items: center;
         text-align: justify;
         padding: 10px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #cccc;
+        color: blue;
+        font-size: 20px;
 
         .left {
-            font-size: 16px;
             font-weight: bold;
             cursor: default;
         }
@@ -25,13 +25,21 @@
 
     .booking-madal-body {
         height: 100%;
-        border-bottom: 1px solid #ccc;
-        padding: 10px;
+
+        .col-6 {
+            margin-top: 10px;
+        }
+
+        .row {
+            padding: 20px;
+            padding-top: 0;
+        }
     }
 
     .booking-madal-footer {
+        border-top: 1px solid #cccc;
         height: 50px;
-        padding: 10px;
+        padding: 10px 20px;
         display: flex;
         justify-content: end;
         gap: 15px;
@@ -40,6 +48,7 @@
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
+            min-width: 100px;
 
         }
 

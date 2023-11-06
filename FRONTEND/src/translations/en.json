@@ -105,6 +105,21 @@
             "name-clinic": "Clinic Name",
             "address-clinic": "Clinic address",
             "note": "note"
+        },
+        "manage-schedule": {
+            "infor-schedules": "Medical appointment booking information",
+            "price": "Examination price",
+            "name": "FullName",
+            "phone": "PhoneNumber",
+            "address": "Contact address",
+            "date": "Date of examination",
+            "time": "Time of examination",
+            "note": "Note",
+            "gender": "Gender",
+            "who": "Who to book",
+            "reason": "Reasons for examination",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
         }
     }
 }
