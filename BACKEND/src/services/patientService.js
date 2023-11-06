@@ -11,14 +11,18 @@ let postPatientBookingOppointment = (data) => {
                 })
             }
             else {
-                let use = await db.User.findOrCreate({
+                let user = await db.User.findOrCreate({
                     where: { email: data.email },
                     defaults: {
                         email: data.email,
                         roleId: "R3"
                     }
                 });
-                resolve(use);
+                resolve({
+                    errCode: 0,
+                    data: user,
+                    errMessage: "Save infor doctor successfully!"
+                });
             }
         }
         catch (e) {
