@@ -1,0 +1,19 @@
+.spcialty-container {
+
+    .all-specialty {
+        margin-top: 30px;
+
+        .file {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .markdown {
+            margin-top: 10px;
+        }
+    }
+
+    .button {
+        margin-top: 10px;
+    }
+}
