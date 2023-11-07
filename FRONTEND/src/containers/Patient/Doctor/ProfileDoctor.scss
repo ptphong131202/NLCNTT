@@ -1,6 +1,5 @@
 .profile {
     padding: 10px 20px;
-    border-bottom: 1px solid #cccc;
 
     .intro-doctor {
         display: flex;
@@ -28,6 +27,18 @@
 
                 p {
                     margin: 0;
+                }
+
+                .hasLocation {
+                    display: flex;
+                    gap: 5px;
+
+                    .location {
+                        background: url("../../../assets/location.jpg");
+                        height: 15px;
+                        width: 15px;
+                        background-size: 100%;
+                    }
                 }
             }
         }

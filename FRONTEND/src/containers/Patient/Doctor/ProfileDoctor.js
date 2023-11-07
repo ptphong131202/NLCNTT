@@ -23,13 +23,23 @@ class ProfileDoctor extends Component {
 
     async componentDidMount() {
         let data = await this.getInforDoctor(this.props.doctorId);
-        this.setState({
-            price: data.Doctor_infor.priceIdData,
-            dataProfile: data,
-            position: data.positionData,
-            firstName: data.firstName,
-            lastName: data.lastName,
-        });
+        if (!data.Doctor_infor) {
+            this.setState({
+                dataProfile: data,
+                position: data.positionData,
+                firstName: data.firstName,
+                lastName: data.lastName,
+            });
+        }
+        else {
+            this.setState({
+                price: data.Doctor_infor.priceIdData,
+                dataProfile: data,
+                position: data.positionData,
+                firstName: data.firstName,
+                lastName: data.lastName,
+            });
+        }
     }
 
     getInforDoctor = async (id) => {
@@ -46,13 +56,23 @@ class ProfileDoctor extends Component {
     componentDidUpdate = async (prevProps, prevState) => {
         if (this.props.doctorId !== prevProps.doctorId) {
             let data = await this.getInforDoctor(this.props.doctorId);
-            this.setState({
-                price: data.Doctor_infor.priceIdData,
-                dataProfile: data,
-                position: data.positionData,
-                firstName: data.firstName,
-                lastName: data.lastName,
-            });
+            if (!data.Doctor_infor) {
+                this.setState({
+                    dataProfile: data,
+                    position: data.positionData,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                });
+            }
+            else {
+                this.setState({
+                    price: data.Doctor_infor.priceIdData,
+                    dataProfile: data,
+                    position: data.positionData,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                });
+            }
         }
 
     }
@@ -102,8 +122,14 @@ class ProfileDoctor extends Component {
                         <div className='down'>
                             <>
                                 {this.props.isOpenProfileDoctor === true && profile.Markdown && profile.Markdown.description
-                                    && <span> {profile.Markdown.description}
-                                    </span>}
+                                    && <div>
+                                        <span> {profile.Markdown.description}
+                                        </span>
+                                        <p className='hasLocation'>
+                                            <p className='location'> </p> {profile.address}
+                                        </p>
+                                    </div>
+                                }
                                 {
                                     this.props.isOpenProfileDoctor === false
                                     && this.renderBooking(this.props.time, profile.address)
@@ -113,7 +139,7 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='price'>
+                {this.props.isOpenProfileDoctor === false && <div className='price'>
                     <div className='price-left'>
                         <FormattedMessage id="admin.manage-schedule.price"></FormattedMessage>:
                     </div>
@@ -125,7 +151,8 @@ class ProfileDoctor extends Component {
                             }
                         </div>
                     </div>
-                </div>
+                </div>}
+
             </div>
         )
     }

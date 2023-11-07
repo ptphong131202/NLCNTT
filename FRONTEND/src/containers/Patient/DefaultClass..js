@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 /* import "./DefaultClass.scss"; */
-import { LANGUAGE } from "../../../utils"
 class DefaultClass extends Component {
 
     constructor(props) {

@@ -56,6 +56,12 @@ class ManageSpecialty extends Component {
         let res = await createNewSpecialty(this.state);
         if (res && res.errCode === 0) {
             toast.success("Specialty saved successfully!");
+            this.setState({
+                name: '',
+                imageBase64: '',
+                descriptionHTML: '',
+                descriptionMarkdown: '',
+            })
         }
         else {
             toast.error("Specialty saved error!");
@@ -75,7 +81,7 @@ class ManageSpecialty extends Component {
                                 onChange={(event) => this.handleOnchangeInput(event, "name")} />
                         </div>
                         <div className='col-6 form-group file'>
-                            <label>Tên chuyên khoa: </label>
+                            <label>Ảnh chuyên khoa: </label>
                             <input className='form-control-file' type='file'
                                 onChange={(event) => this.handleOnchangeImg(event)}
                             />

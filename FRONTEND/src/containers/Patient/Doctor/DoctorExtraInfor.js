@@ -19,22 +19,38 @@ class DoctorExtraInfor extends Component {
             note: '',
         };
     }
+    async componentDidMount() {
+        await this.getExtra();
+    }
 
     getExtra = async () => {
         let res = await getExtraInforDoctorById(this.props.detailDoctor);
         let { paymentIdData, priceIdData, provinceIdData } = res.data;
-        console.log(res.data.paymentIdData);
-        let payment = this.props.language === LANGUAGE.VI ? paymentIdData.valueVi : paymentIdData.valueEn;
-        let price = this.props.language === LANGUAGE.VI ? priceIdData.valueVi : priceIdData.valueEn;
-        let province = this.props.language === LANGUAGE.VI ? provinceIdData.valueVi : provinceIdData.valueEn;
-        this.setState({
-            addressclinic: res.data.addressClinic,
-            nameClicnic: res.data.nameClinic,
-            note: res.data.note,
-            Price: price,
-            Province: province,
-            Payment: payment
-        })
+        if (!paymentIdData || !paymentIdData ||
+            !priceIdData || !priceIdData ||
+            !provinceIdData || !provinceIdData) {
+            this.setState({
+                addressclinic: '',
+                nameClicnic: '',
+                note: '',
+                Price: '',
+                Province: '',
+                Payment: ''
+            })
+        }
+        else {
+            let payment = this.props.language === LANGUAGE.VI ? paymentIdData.valueVi : paymentIdData.valueEn;
+            let price = this.props.language === LANGUAGE.VI ? priceIdData.valueVi : priceIdData.valueEn;
+            let province = this.props.language === LANGUAGE.VI ? provinceIdData.valueVi : provinceIdData.valueEn;
+            this.setState({
+                addressclinic: res.data.addressClinic,
+                nameClicnic: res.data.nameClinic,
+                note: res.data.note,
+                Price: price,
+                Province: province,
+                Payment: payment
+            })
+        }
     }
 
     componentDidUpdate = async (prevProps, prevState) => {

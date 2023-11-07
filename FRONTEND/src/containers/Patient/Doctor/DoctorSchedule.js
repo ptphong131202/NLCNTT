@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import HomeHeader from '../../HomePage/HomeHeader';
 import "./DoctorSchedule.scss";
 import { LANGUAGE } from "../../../utils"
-import { getDetailInforDoctor } from '../../../services/userService';
 import Select from 'react-select';
 import localization from 'moment/locale/vi'
 import { getScheduleDoctorById } from '../../../services/userService';
@@ -28,8 +27,10 @@ class DoctorSchedule extends Component {
     async componentDidMount() {
         let { language } = this.props;
         let alldays = this.getArrDay(language);
+        let res = await getScheduleDoctorById(this.props.detailDoctor, alldays[0].value);
         this.setState({
             allDays: alldays,
+            allAvableTime: res.data ? res.data : []
         })
     }
 

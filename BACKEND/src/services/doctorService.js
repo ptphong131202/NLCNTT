@@ -68,7 +68,8 @@ let saveInforDoctor = (dataInput) => {
                 || !dataInput.selectedPayment
                 || !dataInput.nameClicnic
                 || !dataInput.addressclicnic
-                || !dataInput.note) {
+                || !dataInput.note
+                || !dataInput.specialtyId) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing paramiter!"
@@ -113,6 +114,8 @@ let saveInforDoctor = (dataInput) => {
                     doctorInfor.nameClinic = dataInput.nameClicnic;
                     doctorInfor.note = dataInput.note;
                     doctorInfor.doctorId = dataInput.doctorId;
+                    doctorInfor.clinicId = dataInput.clinicId;
+                    doctorInfor.specialtyId = dataInput.specialtyId;
                     await doctorInfor.save();
                 } else {
                     await db.Doctor_infor.create({
@@ -123,6 +126,8 @@ let saveInforDoctor = (dataInput) => {
                         nameClinic: dataInput.nameClicnic,
                         note: dataInput.note,
                         doctorId: dataInput.doctorId,
+                        clinicId: dataInput.clinicId,
+                        specialtyId: dataInput.specialtyId,
                     })
                 }
                 resolve({

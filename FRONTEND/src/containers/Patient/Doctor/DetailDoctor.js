@@ -29,7 +29,6 @@ class DetailDoctor extends Component {
                     currentDoctorId: id
                 })
             }
-            console.log("check response", response);
         }
     }
     render() {
@@ -42,7 +41,6 @@ class DetailDoctor extends Component {
             namevi = `${detailDoctor.positionData.valueVi},  ${detailDoctor.firstName} ${detailDoctor.lastName}`
             namen = `${detailDoctor.positionData.valueEn},  ${detailDoctor.firstName} ${detailDoctor.lastName}`
         }
-        console.log(this.state)
         return (
             <React.Fragment>
                 <HomeHeader isShowBanner={false} />
