@@ -1,4 +1,6 @@
 .manage-schedule {
+    height: 250px;
+
     .manage-schedule-content {
         width: 70%;
 
@@ -23,7 +25,8 @@
             }
         }
 
-        .btn-schedule {
+        .btn-schedule-en {
+            min-width: 206px;
             background: rgb(209, 255, 4);
             margin: 5px;
 
@@ -34,6 +37,30 @@
             &.active {
                 background: rgb(12, 255, 4);
             }
+        }
+
+        .btn-schedule-vi {
+            min-width: 113px;
+            background: rgb(209, 255, 4);
+            margin: 5px;
+
+            &:hover {
+                background: rgb(12, 255, 4);
+            }
+
+            &.active {
+                background: rgb(12, 255, 4);
+            }
+        }
+
+        .container-save-vi {
+            text-align: center;
+            transform: translateY(65px);
+        }
+
+        .container-save-en {
+            text-align: center;
+            transform: translateY(100px);
         }
 
     }

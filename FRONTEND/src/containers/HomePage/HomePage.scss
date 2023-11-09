@@ -358,12 +358,22 @@
                         background: #ffff;
 
                         .section-list-img {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            .HealthFacility-section-list-img {
+                                width: 70%;
+                                height: 130px;
+                            }
+
                             img {
                                 width: 100%;
                                 height: 150px;
                             }
 
                         }
+
 
                         .section-list-name {
                             padding: 5px;

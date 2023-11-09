@@ -26,7 +26,9 @@ class ManageSchedule extends Component {
         this.props.fetchAllScheduleHour();
     }
     handleChangeSelect = async (selectedDoctor) => {
-        this.setState({ selectedDoctor });
+        this.setState({
+            selectedDoctor,
+        });
 
         /* let res = await getDetailInforDoctor(selectedDoctor.value);
         console.log(res.data.Markdown);
@@ -73,12 +75,12 @@ class ManageSchedule extends Component {
                 listDoctor: dataSelect
             })
         }
-        /* if (prevProps.language !== this.props.language) {
+        if (prevProps.language !== this.props.language) {
             let dataSelect = this.buildInputSelect(this.props.allDoctorRedux);
             this.setState({
                 listDoctor: dataSelect
             })
-        } */
+        }
 
         if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
             let data = this.props.allScheduleTime;
@@ -93,7 +95,7 @@ class ManageSchedule extends Component {
 
     handleOnchangeDatePicker = (date) => {
         this.setState({
-            currentDate: date[0]
+            currentDate: date[0],
         })
     }
 
@@ -186,20 +188,46 @@ class ManageSchedule extends Component {
                                 </div>
                                 <div className='col-12 hour-container mt-2'>
                                     <div className='hour-container-content'>
-                                        {rangeTime && rangeTime.length > 0 && rangeTime.map((item, index) => {
+
+                                        {language === LANGUAGE.VI && rangeTime && rangeTime.length > 0 && rangeTime.map((item, index) => {
                                             return (
-                                                <button className={item.isselected === true ? 'btn btn-schedule active' : 'btn btn-schedule'}
+
+                                                <button className={item.isselected === true ? 'btn btn-schedule-vi active' : 'btn btn-schedule-vi'}
                                                     onClick={() => this.handleButtonTime(item)}
                                                     key={index}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</button>
                                             )
                                         })}
+
+                                        {language === LANGUAGE.EN && rangeTime && rangeTime.length > 0 && rangeTime.map((item, index) => {
+                                            return (
+
+                                                <button className={item.isselected === true ? 'btn btn-schedule-en active' : 'btn btn-schedule-en'}
+                                                    onClick={() => this.handleButtonTime(item)}
+                                                    key={index}>{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</button>
+                                            )
+                                        })}
+
+
                                     </div>
                                 </div>
-                                <p className='col-12 text-center mt-5'>
+                            </div>
+                        </div>
+                        <div className='container container-manage-schedule.save'>
+                            {language === LANGUAGE.VI &&
+                                <div className=' container-save-vi'>
                                     <button className='btn btn-primary'
                                         onClick={() => this.handleSaveSchedule()}
-                                    ><FormattedMessage id="manage-schedule.save" /></button> </p>
-                            </div>
+                                    ><FormattedMessage id="manage-schedule.save" /></button>
+                                </div>
+                            }
+                            {language === LANGUAGE.EN &&
+                                <div className=' container-save-en'>
+                                    <button className='btn btn-primary'
+                                        onClick={() => this.handleSaveSchedule()}
+                                    ><FormattedMessage id="manage-schedule.save" /></button>
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
