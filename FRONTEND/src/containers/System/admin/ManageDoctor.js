@@ -167,7 +167,6 @@ class ManageDoctor extends Component {
         this.setState({ selectedDoctor });
         let { listPayment, listPrice, listProvince, listSpecialty, listClinic } = this.state;
         let res = await getDetailInforDoctor(selectedDoctor.value);
-        console.log("listSpecialty: ", res.data);
         if (res && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
             let addressclicnic = '', nameClicnic = '',
@@ -253,7 +252,6 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        console.log("allRequiredDoctorInfor: ", this.state)
         return (
             < React.Fragment >
                 <div className='container manage-doctor ' >

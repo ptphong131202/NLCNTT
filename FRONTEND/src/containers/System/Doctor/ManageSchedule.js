@@ -30,27 +30,6 @@ class ManageSchedule extends Component {
             selectedDoctor,
         });
 
-        /* let res = await getDetailInforDoctor(selectedDoctor.value);
-        console.log(res.data.Markdown);
-        if (res && res.data && res.data.Markdown) {
-            let markdown = res.data.Markdown;
-            console.log("mark: ", markdown.description);
-            this.setState({
-                contentHTML: markdown.contentHTML,
-                contentMarkdown: markdown.ContentMarkdown,
-                discription: markdown.description,
-                hasOldData: true
-            })
-        }
-        else {
-            this.setState({
-                contentHTML: '',
-                contentMarkdown: '',
-                discription: '',
-                hasOldData: false
-            })
-        } */
-        /* console.log("check ress: ", res); */
     };
     buildInputSelect = (data) => {
         let result = [];
@@ -125,7 +104,6 @@ class ManageSchedule extends Component {
             return;
         }
         let formatedDate = new Date(currentDate).getTime();
-        console.log("check current date: ", formatedDate)
         if (rangeTime && rangeTime.length > 0) {
             let selectedTime = rangeTime.filter(item => item.isselected === true)
             if (selectedTime && selectedTime.length > 0) {
@@ -147,7 +125,6 @@ class ManageSchedule extends Component {
             doctorId: selectedDoctor.value,
             date: '' + formatedDate
         });
-        console.log(response)
         if (response && response.errCode === 0) {
             toast.success("Create schedule success!")
         }
@@ -158,7 +135,6 @@ class ManageSchedule extends Component {
 
     render() {
         let { rangeTime } = this.state;
-        console.log("check time: ", this.state.rangeTime)
         let { language } = this.props;
         return (
             <React.Fragment>

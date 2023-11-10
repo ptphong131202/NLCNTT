@@ -106,10 +106,8 @@ class UserRedux extends Component {
     // event in img for input file 
     handleOnchangeImg = async (event) => {
         let file = event.target.files[0];
-        console.log(file);
         if (file) {
             let getBase64 = await CommonUtils.getBase64(file);
-            console.log(getBase64)
             let objectUrl = URL.createObjectURL(file);
             this.setState({
                 previewImg: objectUrl,
@@ -133,7 +131,6 @@ class UserRedux extends Component {
         let { action } = this.state;
         if (action === CRUD_ACTION.CREATE) {
             // fire redux action
-            console.log(this.state)
             this.props.createNewUser({
                 email: this.state.email,
                 password: this.state.password,
@@ -252,7 +249,6 @@ class UserRedux extends Component {
 
     // handle edit user
     handleEditUserFromParent = (user) => {
-        console.log(user)
         let imageBase64 = '';
         if (user.image) {
             imageBase64 = new Buffer(user.image, 'base64').toString('binary');
@@ -275,7 +271,6 @@ class UserRedux extends Component {
     }
 
     render() {
-        console.log(this.state)
         let genders = this.state.genderArr;
         let positions = this.state.positionArr;
         let roles = this.state.roleArr;

@@ -29,7 +29,6 @@ class HealthFacility extends Component {
     }
     render() {
         let { dataClinic } = this.state;
-        console.log("dataClinic: ", dataClinic)
         return (
             <React.Fragment>
                 <div className='Section HealthFacility'>

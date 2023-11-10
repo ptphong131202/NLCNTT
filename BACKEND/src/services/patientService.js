@@ -14,10 +14,28 @@ let builURLEmail = (doctorId, token) => {
 let postPatientBookingOppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+            /**
+             * fullName: this.state.fullName,
+            phoneNumber: this.state.phoneNumber,
+            email: this.state.email,
+            address: this.state.address,
+            reason: this.state.reason,
+            date: date,
+            genders: this.state.selectedGender.value,
+            doctorId: this.state.doctorId,
+            timeType: this.state.timeType,
+            language: this.props.language,
+            timeString: timestamp,
+            doctorName: doctorName
+             */
             if (!data.email ||
                 !data.doctorId ||
                 !data.date ||
                 !data.timeType ||
+                !data.phoneNumber ||
+                !data.address ||
+                !data.reason ||
+                !data.genders ||
                 !data.fullName ||
                 !data.timeString ||
                 !data.doctorName) {
@@ -28,7 +46,6 @@ let postPatientBookingOppointment = (data) => {
             }
             else {
                 let token = uuidv4();
-
                 await emailservice.sendSimpleEmail({
                     recieverEmail: data.email,
                     patientName: data.fullName,
@@ -42,7 +59,10 @@ let postPatientBookingOppointment = (data) => {
                     where: { email: data.email },
                     defaults: {
                         email: data.email,
-                        roleId: "R3"
+                        roleId: "R3",
+                        address: data.address,
+                        gender: data.genders,
+                        lastName: data.fullName
                     }
                 });
                 resolve({
@@ -83,7 +103,6 @@ let postVerifyBookingOppointment = (data) => {
                 })
             }
             else {
-                console.log(data)
                 let appoinment = await db.Booking.findOne({
                     where: {
                         token: data.token,

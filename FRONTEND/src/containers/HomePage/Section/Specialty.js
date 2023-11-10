@@ -15,7 +15,6 @@ class Specialty extends Component {
 
     async componentDidMount() {
         let res = await getAllSpecialty();
-        console.log("check get all specialty: ", res.data)
         if (res && res.errCode === 0) {
             this.setState({
                 dataSpecialty: res.data
@@ -28,7 +27,6 @@ class Specialty extends Component {
         }
     }
     render() {
-        console.log("check get all specialty: ", this.state)
         let { dataSpecialty } = this.state;
         return (
             <React.Fragment>

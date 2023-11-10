@@ -44,7 +44,6 @@ class DetailSpecialty extends Component {
 
     }
     render() {
-        console.log("check state res clinic: ", this.state)
         let { dataClinic } = this.state;
         return (
             <> <HomeHeader />

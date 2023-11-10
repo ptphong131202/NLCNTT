@@ -42,7 +42,6 @@ class DetailSpecialty extends Component {
     }
 
     handleViewDetailDoctor = (item) => {
-        console.log(item);
         if (this.props.history) {
             this.props.history.push(`/detail-doctor/${item}`);
         }
@@ -56,7 +55,6 @@ class DetailSpecialty extends Component {
     render() {
         let { arrDoctorIds, dataDetaiSpecialty } = this.state;
         let doctorSpecialty = dataDetaiSpecialty.doctorSpecialty;
-        console.log("response: ",);
 
         return (
             <>

@@ -220,7 +220,7 @@ export const updateUserFailed = () => ({
 export const fetchTopDoctorHome = () => {
     return async (dispatch, getState) => {
         try {
-            let res = await getTopDoctorHomeService('5');
+            let res = await getTopDoctorHomeService("20");
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.FETCH_TOP_DOCTOR_USERS_SUCCESS,
@@ -282,7 +282,6 @@ export const saveInforDetailDoctor = (data) => {
                 });
             }
             else {
-                console.log("errror 1: ", res);
                 toast.error("Save information doctor error!");
                 dispatch({
                     type: actionTypes.SAVE_DOCTOR_INFOR_FAILED

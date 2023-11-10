@@ -1,6 +1,7 @@
 import db from '../models/index';
 require('dotenv').config();
 import _ from 'lodash';
+import EmailSevise from "./EmailService"
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 let getTopDoctorHome = (limitInput) => {
     return new Promise(async (resolve, reject) => {
@@ -375,47 +376,78 @@ let getProfileDoctor = (inputId) => {
 let getPatientForDoctor = (doctorId, date) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputId) {
+            if (!doctorId || !date) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing required paramiter!"
                 })
             }
             else {
-                let user = await db.User.findOne({
-                    where: { id: inputId },
-                    attributes: {
-                        exclude: ['password',]
+                let data = await db.Booking.findAll({
+                    where: {
+                        statusId: "S2",
+                        doctorId: doctorId,
+                        date: date
                     },
                     include: [
-                        { model: db.Markdowns, attributes: ['description', "contentHTML", "ContentMarkdown"] },
-                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
                         {
-                            model: db.Doctor_infor,
-                            attributes: {
-                                exclude: ['id', 'doctorId']
-                            },
+                            model: db.User, as: "patientIdData",
+                            attributes: ['email', 'lastName', "address", "gender"],
                             include: [
-                                { model: db.Allcode, as: 'priceIdData', attributes: ['valueEn', 'valueVi'] },
-                                { model: db.Allcode, as: 'provinceIdData', attributes: ['valueEn', 'valueVi'] },
-                                { model: db.Allcode, as: 'paymentIdData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] },
                             ]
                         },
+                        { model: db.Allcode, as: 'timeTypeBookingData', attributes: ['valueEn', 'valueVi'] },
 
                     ],
                     raw: false,
-                    nest: true
-                });
-
-                if (user && user.image) {
-                    user.image = new Buffer(user.image, 'base64').toString('binary');
-                }
-
-                if (!user) user = {}
-
+                    nest: true,
+                })
                 resolve({
                     errCode: 0,
-                    data: user
+                    data: data
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    });
+}
+
+
+let sendRemedy = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.patientId || !data.doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required paramiter!"
+                })
+            }
+            else {
+                let appoiment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        patientId: data.patientId,
+                        statusId: "S2"
+                    },
+                    raw: false
+                })
+
+                if (appoiment) {
+                    appoiment.statusId = "S3";
+                    await appoiment.save();
+                }
+
+                await EmailSevise.sendAttachment({
+                    email: data.email,
+                    language: data.language,
+                    imgBase64: data.imgBase64
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: "ok",
                 })
             }
         }
@@ -433,6 +465,6 @@ module.exports = {
     getScheduleDoctorDate: getScheduleDoctorDate,
     getExtraInforDoctor: getExtraInforDoctor,
     getProfileDoctor: getProfileDoctor,
-    getPatientForDoctor: getPatientForDoctor
-
+    getPatientForDoctor: getPatientForDoctor,
+    sendRemedy: sendRemedy,
 }

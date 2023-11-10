@@ -122,17 +122,20 @@ class BookingModal extends Component {
         /*validate*/
         let date = new Date(this.state.birtDay).getTime();
         let timestamp = this.buildTimeBooking(this.props.dataScheduleTimeModal)
-        let doctorName = this.buildDoctorName(this.props.dataScheduleTimeModal)
+        let doctorName = this.buildDoctorName(this.props.dataScheduleTimeModal);
+        let timeType = this.props.dataScheduleTimeModal.timeType;
+        let doctorId = this.props.dataScheduleTimeModal.doctorId;
         let res = await postPatientBookAppoiment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
             email: this.state.email,
             address: this.state.address,
             reason: this.state.reason,
-            date: date,
+            date: this.props.dataScheduleTimeModal.date,
+            birtDay: date,
             genders: this.state.selectedGender.value,
-            doctorId: this.state.doctorId,
-            timeType: this.state.timeType,
+            doctorId: doctorId,
+            timeType: timeType,
             language: this.props.language,
             timeString: timestamp,
             doctorName: doctorName
@@ -152,7 +155,6 @@ class BookingModal extends Component {
         if (this.props.dataScheduleTimeModal && !_.isEmpty(this.props.dataScheduleTimeModal)) {
             doctorId = this.props.dataScheduleTimeModal.doctorId;
         }
-        console.log("check data time: ", this.props.dataScheduleTimeModal)
         return (
             <div className='container bookingModal'>
                 <Modal isOpen={this.props.isOpenModal}

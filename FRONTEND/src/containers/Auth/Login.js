@@ -50,7 +50,6 @@ class Login extends Component {
             }
             if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user);
-                console.log('loging success');
             }
 
         } catch (e) {
@@ -61,7 +60,6 @@ class Login extends Component {
                     })
                 }
             }
-            console.log('error message', e.response);
         }
     }
 
@@ -70,7 +68,6 @@ class Login extends Component {
         this.setState({
             showPassword: !this.state.showPassword
         })
-        console.log(this.state.showPassword);
     }
     handleOnkeyDown = (e) => {
         if (e.keyCode === 13 || e.keyCode === "Enter") {

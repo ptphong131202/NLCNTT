@@ -85,7 +85,6 @@ class ManageClinic extends Component {
     }
 
     render() {
-        console.log("checking state: ", this.state)
         return (
             <div className='container clinic-container'>
                 <div className='title mt-5'>QUẢN LÝ PHÒNG KHÁM</div>

@@ -57,7 +57,59 @@ let getBodyHTMLEmail = (dataSend) => {
     return result;
 }
 
+
+
+
+let sendAttachment = async (dataSend) => {
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.EMAIL_APP,
+            pass: process.env.EMAILAPPPASSWORD
+        }
+    });
+
+    let infor = await transporter.sendMail({
+        from: "From BookingCare",
+        to: dataSend.email,
+        subject: 'Thông tin đặt lịch khám bệnh',
+        html: getBodyHTMLEmailRemedy(dataSend),
+        attachments: [
+            {
+                filename: 'cat.jpg',
+                content: dataSend.imgBase64.split("base64,")[1],
+                encoding: 'base64'
+            }
+        ]
+    });
+}
+
+
+let getBodyHTMLEmailRemedy = (dataSend) => {
+    let result = '';
+    if (dataSend.language === 'vi') {
+        result =
+            `<h3>Xin chào !</h3>
+        <p>Bạn đã nhận được Email này vì đã đặt lịch khám bệnh online trên trang BookingCare!</p>
+        <p>Thông tin đặt lịch khám bệnh:</p>
+       
+        <div>Xin chân thành cảm ơn!</div>
+        `
+    }
+    if (dataSend.language === 'en') {
+        result = `<h3>Dear</h3>
+        <p>You received this email because you booked an online consultation on BookingCare!</p>
+        <p>Medical appointment booking information:</p>
+        <div>Thank you very much!</div>
+        `
+    }
+    return result;
+}
 module.exports = {
     sendSimpleEmail: sendSimpleEmail,
-    getBodyHTMLEmail: getBodyHTMLEmail
+    getBodyHTMLEmail: getBodyHTMLEmail,
+    sendAttachment: sendAttachment,
+    getBodyHTMLEmailRemedy: getBodyHTMLEmailRemedy
 }

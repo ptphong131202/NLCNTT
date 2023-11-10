@@ -26,7 +26,6 @@ class DoctorExtraInfor extends Component {
     getExtra = async () => {
         let res = await getExtraInforDoctorById(this.props.detailDoctor);
         let { paymentIdData, priceIdData, provinceIdData } = res.data;
-        console.log("check res doctorextra: ", res.data)
         if (!paymentIdData || !paymentIdData ||
             !priceIdData || !priceIdData ||
             !provinceIdData || !provinceIdData) {
@@ -76,7 +75,6 @@ class DoctorExtraInfor extends Component {
 
     render() {
         let { isShowDetailInfo } = this.state;
-        console.log("check state doctorextrainfor: ", this.state)
         return (
             <div className='container DoctorExtraInfor'>
                 <div className='up'>

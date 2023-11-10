@@ -34,7 +34,6 @@ class ProfessionalDoctor extends Component {
     render() {
         let arrDoctors = this.state.arrDoctor;
         let { language } = this.props;
-        console.log("ckejwu: ", this.state.arrDoctor)
         return (
             <React.Fragment>
                 <div className='Section ProfessionalDoctor'>
