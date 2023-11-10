@@ -60,6 +60,11 @@ export const doctorMenu = [
                 name: 'menu.doctor.manage-shedule', link: '/doctor/manage-shedule'
 
             },
+            { //quản lý kế hoạch bệnh nhân của bác sĩ
+
+                name: 'menu.doctor.manage-patient', link: '/doctor/manage-patient'
+
+            },
         ]
     }
 

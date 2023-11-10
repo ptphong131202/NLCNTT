@@ -40,8 +40,11 @@ let getDetalClinicById = async (req, res) => {
         })
     }
 }
+
+
 module.exports = {
     createNewClinic: createNewClinic,
     getAllClinic: getAllClinic,
-    getDetalClinicById: getDetalClinicById
+    getDetalClinicById: getDetalClinicById,
+
 }

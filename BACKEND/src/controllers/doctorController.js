@@ -122,6 +122,22 @@ let getProfileDoctorById = async (req, res) => {
         })
     }
 }
+let getPatientForDoctor = async (req, res) => {
+    try {
+
+        let patient = await doctorSevice.getPatientForDoctor(req.query.doctorId, req.query.date);
+        return res.status(200).json(patient);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from the serser!"
+        })
+    }
+}
+
+
 
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
@@ -131,5 +147,6 @@ module.exports = {
     postBulkCreateSchedule: postBulkCreateSchedule,
     getScheduleDoctorById: getScheduleDoctorById,
     getExtraInforDoctorById: getExtraInforDoctorById,
-    getProfileDoctorById: getProfileDoctorById
+    getProfileDoctorById: getProfileDoctorById,
+    getPatientForDoctor: getPatientForDoctor,
 }

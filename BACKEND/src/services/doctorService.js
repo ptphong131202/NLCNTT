@@ -69,7 +69,8 @@ let saveInforDoctor = (dataInput) => {
                 || !dataInput.nameClicnic
                 || !dataInput.addressclicnic
                 || !dataInput.note
-                || !dataInput.specialtyId) {
+                || !dataInput.specialtyId,
+                !! !dataInput.clinicId) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing paramiter!"
@@ -370,6 +371,59 @@ let getProfileDoctor = (inputId) => {
         }
     });
 }
+
+let getPatientForDoctor = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required paramiter!"
+                })
+            }
+            else {
+                let user = await db.User.findOne({
+                    where: { id: inputId },
+                    attributes: {
+                        exclude: ['password',]
+                    },
+                    include: [
+                        { model: db.Markdowns, attributes: ['description', "contentHTML", "ContentMarkdown"] },
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.Doctor_infor,
+                            attributes: {
+                                exclude: ['id', 'doctorId']
+                            },
+                            include: [
+                                { model: db.Allcode, as: 'priceIdData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'provinceIdData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'paymentIdData', attributes: ['valueEn', 'valueVi'] },
+                            ]
+                        },
+
+                    ],
+                    raw: false,
+                    nest: true
+                });
+
+                if (user && user.image) {
+                    user.image = new Buffer(user.image, 'base64').toString('binary');
+                }
+
+                if (!user) user = {}
+
+                resolve({
+                    errCode: 0,
+                    data: user
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    });
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
@@ -378,6 +432,7 @@ module.exports = {
     bulkCreateSchedule: bulkCreateSchedule,
     getScheduleDoctorDate: getScheduleDoctorDate,
     getExtraInforDoctor: getExtraInforDoctor,
-    getProfileDoctor: getProfileDoctor
+    getProfileDoctor: getProfileDoctor,
+    getPatientForDoctor: getPatientForDoctor
 
 }
