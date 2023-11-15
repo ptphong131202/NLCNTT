@@ -254,6 +254,9 @@ class ManageDoctor extends Component {
     render() {
         return (
             < React.Fragment >
+                <head>
+                    <title>Quản lý bác sĩ</title>
+                </head>
                 <div className='container manage-doctor ' >
                     <h3 className='text-center text-primary pt-5 pb-3 fw-bold mt-3'><FormattedMessage id="admin.manage-doctor.title" /></h3>
                     <div className='more-infor'>

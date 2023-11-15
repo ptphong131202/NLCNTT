@@ -4,77 +4,76 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./HandBook.scss";
+import { getAllHandbook } from ".././../../services/userService"
+import { withRouter } from 'react-router';
 import ImageHandBook from "../../../assets/163557-dat-lich-cham-soc-wecare247.png";
-class HandBook extends Component
-{
+class HandBook extends Component {
 
-    render ()
-    {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listHandBook: []
+        }
+    }
+
+    async componentDidMount() {
+        let res = await getAllHandbook();
+        if (res && res.errCode === 0) {
+            this.setState({
+                listHandBook: res.data
+            })
+        }
+    }
+
+    handleViewDetailDoctor = (item) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-handbook/${item.id}`);
+        }
+    }
+
+    handleListHandbook = () => {
+        if (this.props.history) {
+            this.props.history.push(`/list-handbook`);
+        }
+    }
+    render() {
         let settings = {
             dots: false,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 2,
             slidesToScroll: 1
         };
+        let { listHandBook } = this.state;
         return (
             <React.Fragment>
                 <div className='Section HandBook'>
                     <div className='section-content '>
                         <div className='section-content-header'>
                             <div className='section-header-name'>Cơ sở y tế nổi bật</div>
-                            <div className='section-header-navi'>Tìm kiếm</div>
+                            <div className='section-header-navi'
+                                onClick={() => this.handleListHandbook()}
+                            >Xem thêm</div>
                         </div>
                         <Slider {...settings}>
+                            {listHandBook && listHandBook.map((item, index) => {
+                                return (
+                                    <div className='section-list-ck section-list-handbook' key={index}
+                                        onClick={() => this.handleViewDetailDoctor(item)} >
+                                        <div className='section-list handbook'>
+                                            <div className='section-list-img section-list-img-handbook'>
+                                                <img className='' src={item.image} />
+                                            </div>
+                                            <div className=' section-list-name-handbook'>
+                                                {item.name}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                            }
 
-                            <div className='section-list-ck section-list-handbook' >
-                                <div className='section-list handbook'>
-                                    <div className='section-list-img section-list-img-handbook'>
-                                        <img className='' src={ImageHandBook} />
-                                    </div>
-                                    <div className='section-list-name section-list-name-handbook'>Đặt lịch chăm sóc sức khỏe tại nhà, tại viện cho người cao tuổi, người bệnh</div>
-                                </div>
-                            </div>
-                            <div className='section-list-ck' style="width: 220px">
-                                <div className='section-list handbook'>
-                                    <div className='section-list-img section-list-img-handbook'>
-                                        <img className='' src={ImageHandBook} />
-                                    </div>
-                                    <div className='section-list-name section-list-name-handbook'>Đặt lịch chăm sóc sức khỏe tại nhà, tại viện cho người cao tuổi, người bệnh</div>
-                                </div>
-                            </div>
-                            <div className='section-list-ck' style="width: 220px">
-                                <div className='section-list handbook'>
-                                    <div className='section-list-img section-list-img-handbook'>
-                                        <img className='' src={ImageHandBook} />
-                                    </div>
-                                    <div className='section-list-name section-list-name-handbook'>Đặt lịch chăm sóc sức khỏe tại nhà, tại viện cho người cao tuổi, người bệnh</div>
-                                </div>
-                            </div>
-                            <div className='section-list-ck' style="width: 220px">
-                                <div className='section-list handbook'>
-                                    <div className='section-list-img section-list-img-handbook'>
-                                        <img className='' src={ImageHandBook} />
-                                    </div>
-                                    <div className='section-list-name section-list-name-handbook'>Đặt lịch chăm sóc sức khỏe tại nhà, tại viện cho người cao tuổi, người bệnh</div>
-                                </div>
-                            </div>
-                            <div className='section-list-ck' style="width: 220px">
-                                <div className='section-list handbook'>
-                                    <div className='section-list-img section-list-img-handbook'>
-                                        <img className='' src={ImageHandBook} />
-                                    </div>
-                                    <div className='section-list-name section-list-name-handbook'>Đặt lịch chăm sóc sức khỏe tại nhà, tại viện cho người cao tuổi, người bệnh</div>
-                                </div>
-                            </div>
-                            <div className='section-list-ck' style="width: 220px">
-                                <div className='section-list handbook'>
-                                    <div className='section-list-img section-list-img-handbook'>
-                                        <img className='' src={ImageHandBook} />
-                                    </div>
-                                    <div className='section-list-name section-list-name-handbook'>Đặt lịch chăm sóc sức khỏe tại nhà, tại viện cho người cao tuổi, người bệnh</div>
-                                </div>
-                            </div>
+
 
                         </Slider>
                     </div>
@@ -85,17 +84,15 @@ class HandBook extends Component
 
 }
 
-const mapStateToProps = state =>
-{
+const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn
     };
 };
 
-const mapDispatchToProps = dispatch =>
-{
+const mapDispatchToProps = dispatch => {
     return {
     };
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( HandBook );
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HandBook));

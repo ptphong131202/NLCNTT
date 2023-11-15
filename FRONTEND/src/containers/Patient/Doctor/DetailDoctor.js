@@ -43,6 +43,9 @@ class DetailDoctor extends Component {
         }
         return (
             <React.Fragment>
+                <head>
+                    <title>{language === 'vi' ? namevi : namen}</title>
+                </head>
                 <HomeHeader isShowBanner={false} />
                 <div className='container doctor-detail'>
                     <div className='doctor-detail-container'>

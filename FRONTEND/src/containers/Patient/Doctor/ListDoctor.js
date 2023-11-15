@@ -51,6 +51,9 @@ class ListDoctor extends Component {
         let { language } = this.props
         return (
             <>
+                <head>
+                    <title>Danh sách bác sĩ</title>
+                </head>
                 <HomeHeader />
                 <div className='container listSpecialty listdoctor'>
                     <div className='form-search col-5 mx-auto'>

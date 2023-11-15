@@ -61,7 +61,8 @@
         },
         "doctor": {
             "manage-shedule": "Manage Doctor's Schedule",
-            "manage-patient": "Manage Doctor's Patient"
+            "manage-patient": "Manage Doctor's Patient",
+            "manage-handbook": "Manage Doctor's Handbook"
         }
     },
     "manage-user": {

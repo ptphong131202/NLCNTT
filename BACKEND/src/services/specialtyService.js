@@ -76,7 +76,7 @@ let getDetalSpecialtyById = (id, location) => {
             else {
                 let specialty = await db.Specialty.findOne({
                     where: { id: id },
-                    attributes: ['id', 'descriptionHTML', 'descriptionMarkdown', "image"]
+                    attributes: ['id', 'descriptionHTML', 'descriptionMarkdown', "image", "name"]
                 });
                 if (specialty) {
                     specialty.image = new Buffer(specialty.image, 'base64').toString('binary');

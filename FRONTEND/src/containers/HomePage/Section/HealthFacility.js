@@ -27,6 +27,12 @@ class HealthFacility extends Component {
             this.props.history.push(`/detail-clinic/${item.id}`);
         }
     }
+
+    handleListClinic = () => {
+        if (this.props.history) {
+            this.props.history.push(`/list-linic`);
+        }
+    }
     render() {
         let { dataClinic } = this.state;
         return (
@@ -35,12 +41,15 @@ class HealthFacility extends Component {
                     <div className='section-content '>
                         <div className='section-content-header'>
                             <div className='section-header-name'>Cơ sở y tế nổi bật</div>
-                            <div className='section-header-navi'>Tìm kiếm</div>
+                            <div className='section-header-navi'
+                                onClick={() => this.handleListClinic()}
+                            >Xem thêm</div>
                         </div>
                         <Slider {...this.props.settings}>
                             {dataClinic && dataClinic.map((item, index) => {
                                 return (
-                                    <div className='section-list-ck HealthFacility-section-list-ck' key={index} onClick={() => this.handleViewDetailClinic(item)}>
+                                    <div className='section-list-ck HealthFacility-section-list-ck' key={index}
+                                        onClick={() => this.handleViewDetailClinic(item)}>
                                         <div className='section-list'>
                                             <div className='section-list-img '>
                                                 <img className='HealthFacility-section-list-img' src={item.image}

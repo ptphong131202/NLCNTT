@@ -87,6 +87,9 @@ class ManageClinic extends Component {
     render() {
         return (
             <div className='container clinic-container'>
+                <head>
+                    <title>quản lý phòng khám</title>
+                </head>
                 <div className='title mt-5'>QUẢN LÝ PHÒNG KHÁM</div>
 
                 <div className='all-specialty'>

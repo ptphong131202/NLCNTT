@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import "./ManageSpecialty.scss";
+import "./ManageHandbook.scss";
 /* import { LANGUAGE } from "../../../utils" */
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import { CommonUtils } from '../../../../utils';
-import { createNewSpecialty } from "../../../../services/userService"
+import { createNewHandBook } from "../../../../services/userService"
 import { Toast, toast } from 'react-toastify';
 const mdParser = new MarkdownIt(/* Markdown-it options */);
-class ManageSpecialty extends Component {
+class ManageHandbook extends Component {
 
     constructor(props) {
         super(props);
@@ -53,7 +53,7 @@ class ManageSpecialty extends Component {
     }
 
     handleSaveSpecialty = async () => {
-        let res = await createNewSpecialty(this.state);
+        let res = await createNewHandBook(this.state);
         if (res && res.errCode === 0) {
             toast.success("Specialty saved successfully!");
             this.setState({
@@ -68,23 +68,24 @@ class ManageSpecialty extends Component {
         }
     }
     render() {
+        console.log(this.state)
         return (
-            <div className='container spcialty-container'>
+            <div className='container handbook'>
                 <head>
-                    <title>Quản lý chuyên khoa</title>
+                    <title>Quản lý cẩm nang</title>
                 </head>
-                <div className='title'>QUẢN LÝ CHUYÊN KHOA</div>
+                <div className='title'>QUẢN LÝ CẨM NANG</div>
 
                 <div className='all-specialty'>
-                    <div className='row'>
+                    <div className='row '>
                         <div className='col-6 form-group'>
-                            <label>Tên chuyên khoa: </label>
+                            <label>Tên cẩm nang: </label>
                             <input className='form-control'
                                 type='text' value={this.state.name}
                                 onChange={(event) => this.handleOnchangeInput(event, "name")} />
                         </div>
-                        <div className='col-6 form-group file'>
-                            <label>Ảnh chuyên khoa: </label>
+                        <div className='col-6 form-group file row-handbook'>
+                            <label>Ảnh cẩm nang: </label>
                             <input className='form-control-file' type='file'
                                 onChange={(event) => this.handleOnchangeImg(event)}
                             />
@@ -120,4 +121,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSpecialty);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageHandbook);

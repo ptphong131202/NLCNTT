@@ -67,7 +67,7 @@ class HomeHeader extends Component {
                                 <div className='child-content-name'><FormattedMessage id="homeheader.doctor" /></div>
                                 <div className='child-content-title'><FormattedMessage id="homeheader.choosegooddoctor" /></div>
                             </div>
-                            <div className='child-content'>
+                            <div className='child-content' onClick={() => this.Moveto('packet-exam')}>
                                 <div className='child-content-name'><FormattedMessage id="homeheader.exampaacket" /></div>
                                 <div className='child-content-title'><FormattedMessage id="homeheader.generalexamination" /></div>
                             </div>
@@ -124,55 +124,59 @@ class HomeHeader extends Component {
                             </div>
                             <div className='banner-footer'>
                                 <div className='banner-footer-content'>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child'
+                                        onClick={() => this.Moveto('list-specialty')}
+                                    >
                                         <div className='content-img'>
                                             <div className='content-icon content-icon1'></div>
                                         </div>
-                                        <div className='content-title'><FormattedMessage id="banner.specialist" /></div>
+                                        <div className='content-title'
+
+                                        ><FormattedMessage id="banner.specialist" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon2'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.telemedicine" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon3'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.generalsexam" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon4'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.medicaltest" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon5'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.mentalhealth" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon6'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.dentalexam" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon7'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.surgicalpacket" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon8'></div>
                                         </div>
                                         <div className='content-title'><FormattedMessage id="banner.healthylivedibet" /></div>
                                     </div>
-                                    <div className='banner-footer-child'>
+                                    <div className='banner-footer-child' onClick={() => this.Moveto('list-specialty')}>
                                         <div className='content-img'>
                                             <div className='content-icon content-icon9'></div>
                                         </div>

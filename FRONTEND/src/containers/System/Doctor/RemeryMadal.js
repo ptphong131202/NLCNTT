@@ -13,6 +13,7 @@ class RemeryMadal extends Component {
         super(props);
         this.state = {
             email: '',
+            Diagnostics: '',
             imgBase64: '',
             isChangeImage: false
         };
@@ -38,6 +39,11 @@ class RemeryMadal extends Component {
             email: event.target.value
         });
     }
+    handleOnchangeDiagnosticsl = (event) => {
+        this.setState({
+            Diagnostics: event.target.value
+        });
+    }
     handleOnchangeImg = async (event) => {
         let file = event.target.files[0];
         if (file) {
@@ -52,7 +58,9 @@ class RemeryMadal extends Component {
         this.props.sendRemery(this.state)
     }
 
+
     render() {
+        console.log(this.state)
         let { isOpenRemery, closeRemery, dataModal, sendRemery } = this.props
         return (
             <div>
@@ -76,6 +84,13 @@ class RemeryMadal extends Component {
                                 <label>Email bệnh nhân: </label>
                                 <input className='form-control' value={this.state.email}
                                     onChange={(event) => this.handleOnchangeEmail(event)}
+                                />
+
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Chuẩn đoán: </label>
+                                <input className='form-control' value={this.state.Diagnostics}
+                                    onChange={(event) => this.handleOnchangeDiagnosticsl(event)}
                                 />
 
                             </div>

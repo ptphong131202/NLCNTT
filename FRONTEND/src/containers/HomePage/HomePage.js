@@ -22,6 +22,9 @@ class HomePage extends Component {
         };
         return (
             <React.Fragment>
+                <head>
+                    <title>Trang chủ</title>
+                </head>
                 <div> <HomeHeader isShowBanner={true} />
                     <Specialty settings={settings} />
                     <ProfessionalDoctor settings={settings} />

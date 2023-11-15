@@ -31,7 +31,7 @@ class ManagePatient extends Component {
             doctorId: user.id,
             date: formatdate
         });
-
+        console.log(res)
         if (res && res.errCode === 0) {
             this.setState({
                 dataPatient: res.data
@@ -77,6 +77,7 @@ class ManagePatient extends Component {
             patientId: dataModal.patientId,
             timetype: dataModal.timetype,
             language: this.props.language,
+            Diagnostics: data.Diagnostics
 
         })
 
@@ -93,11 +94,14 @@ class ManagePatient extends Component {
     }
 
     render() {
-        let { dataPatient } = this.state
+        let { dataPatient } = this.state;
         let { language } = this.props;
-        console.log(this.props.user)
+        console.log(this.state)
         return (
             <>
+                <head>
+                    <title>Quản lý bệnh nhân</title>
+                </head>
                 <RemeryMadal
                     isOpenRemery={this.state.isOpenRemery}
                     dataModal={this.state.dataModal}

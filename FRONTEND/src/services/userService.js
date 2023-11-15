@@ -109,6 +109,21 @@ const searchClinic = (search) => {
     return axios.get(`/api/search-clinic?search=${search}`);
 }
 
+
+const createNewHandBook = (data) => {
+    return axios.post(`api/create-new-handbook`, data);
+}
+
+
+const getAllHandbook = () => {
+    return axios.get(`/api/get-all-handbook`);
+}
+
+
+
+const getDetalhandbookById = (id) => {
+    return axios.get(`/api/get-detail-handbook-by-id?id=${id}`);
+}
 export {
     handleLoginApi, getAllUser, createNewUserService,
     deleteUserService, editUserService, getAllcodeService,
@@ -118,5 +133,6 @@ export {
     postVerifyBookAppoiment, createNewSpecialty,
     getAllSpecialty, getDetaiSpecialty,
     createNewClinic, getAllClinic, getDetaiClinic, getPatientforDoctor,
-    postSendRemedy, searchDoctor, searchSpecialty, searchClinic
+    postSendRemedy, searchDoctor, searchSpecialty, searchClinic,
+    createNewHandBook, getAllHandbook, getDetalhandbookById
 };

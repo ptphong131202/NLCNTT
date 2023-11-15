@@ -26,6 +26,12 @@ class Specialty extends Component {
             this.props.history.push(`/detail-specialty/${item.id}`);
         }
     }
+
+    handleListDoctor = () => {
+        if (this.props.history) {
+            this.props.history.push(`/list-specialty`);
+        }
+    }
     render() {
         let { dataSpecialty } = this.state;
         return (
@@ -34,12 +40,15 @@ class Specialty extends Component {
                     <div className='section-content '>
                         <div className='section-content-header'>
                             <div className='section-header-name'>Chuyên khoa nổi bật</div>
-                            <div className='section-header-navi'>Xem thêm</div>
+                            <div className='section-header-navi'
+                                onClick={() => this.handleListDoctor()}
+                            >Xem thêm</div>
                         </div>
                         <Slider {...this.props.settings}>
                             {dataSpecialty && dataSpecialty.map((item, index) => {
                                 return (
-                                    <div className='section-list-ck' key={index} onClick={() => this.handleViewDetailDoctor(item)}>
+                                    <div className='section-list-ck' key={index}
+                                        onClick={() => this.handleViewDetailDoctor(item)}>
                                         <div className='section-list'>
                                             <div className='section-list-img'>
                                                 <img className='' src={item.image} />

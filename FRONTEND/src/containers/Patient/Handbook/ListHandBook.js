@@ -1,26 +1,25 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import "./ListClinic.scss";
+import "./ListHandBook.scss";
 import HomeHeader from '../../HomePage/HomeHeader';
 import { withRouter } from 'react-router';
-import { getAllClinic, searchClinic } from "../../../services/userService"
+import { getAllHandbook, searchSpecialty } from "../../../services/userService"
 import _ from "lodash"
-class ListClinic extends Component {
+class ListHandBook extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            listClinic: [],
-            isopen: false
+            listHandBook: [],
         };
     }
 
     async componentDidMount() {
 
-        let res = await getAllClinic();
+        let res = await getAllHandbook();
         console.log(res);
         this.setState({
-            listClinic: res.data
+            listHandBook: res.data
         })
 
     }
@@ -31,57 +30,50 @@ class ListClinic extends Component {
 
     handleOnclistopen = (item) => {
         if (this.props.history) {
-            this.props.history.push(`/detail-clinic/${item.id}`);
+            this.props.history.push(`/detail-handbook/${item.id}`);
         }
     }
+
     handleOnchaneInput = async (event) => {
         console.log("check event input: ", event.target.value)
-        let response = await searchClinic(event.target.value);
-        console.log(response)
+        let response = await searchSpecialty(event.target.value);
         if (response && !_.isEmpty(response)) {
             this.setState({
-                listClinic: response.data
+                listHandBook: response.data
             })
         }
 
     }
-
     render() {
 
-        let { listClinic } = this.state;
+        let { listHandBook } = this.state;
+        console.log(listHandBook)
         return (
-            <><head>
-                <title>Danh sách phòng khám</title>
-            </head>
+            <>
                 <HomeHeader />
                 <div className='container listSpecialty'>
                     <div className='form-search col-5 mx-auto'>
                         <i className='fas fa-search'></i>
                         <input type='text'
-                            placeholder='Nhập để tìm kiếm phòng khám'
+                            placeholder='Nhập để tìm kiếm chuyên khoa'
                             onChange={(event) => this.handleOnchaneInput(event)}
                         />
                     </div>
                     <div className='specialty-list'>
-                        {listClinic && !_.isEmpty(listClinic)
-                            && listClinic.map((item, index) => {
+                        {listHandBook && !_.isEmpty(listHandBook)
+                            && listHandBook.map((item, index) => {
                                 return (
-                                    <div className='arrSpecialty'>
-                                        <div className='seemore'>
-                                            <span onClick={() => this.handleOnclistopen(item)} >
-                                                Xem thêm
-                                            </span>
-                                        </div>
-                                        <div className='specialty-item' key={index}>
+                                    <div className='arrSpecialty-handbook' key={index}
+                                        onClick={() => this.handleOnclistopen(item)}
+                                    >
+
+                                        <div className='specialty-item' >
                                             <div className='logo'>
-                                                <img src={item.image} />
+                                                <img className='img-handbook' src={item.image} />
                                             </div>
                                             <div className='right'>
 
-                                                <div className='down'>
-                                                    <div className='desc' dangerouslySetInnerHTML={{ __html: item.descriptionHTML }}></div>
-
-                                                </div>
+                                                {item.name}
                                             </div>
 
                                         </div>
@@ -91,10 +83,11 @@ class ListClinic extends Component {
                             })
 
                         }
+
                         {
-                            !listClinic &&
+                            !listHandBook &&
                             <div div className=' text-center fw-bold mt-3 fs-4'>
-                                Không tìm thấy phòng khám
+                                Không tìm thấy chuyên khoa
                             </div>
                         }
 
@@ -117,4 +110,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListClinic));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListHandBook));

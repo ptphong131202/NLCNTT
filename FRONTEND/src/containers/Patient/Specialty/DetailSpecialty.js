@@ -55,9 +55,11 @@ class DetailSpecialty extends Component {
     render() {
         let { arrDoctorIds, dataDetaiSpecialty } = this.state;
         let doctorSpecialty = dataDetaiSpecialty.doctorSpecialty;
-
         return (
             <>
+                <head>
+                    <title>Chuyên khoa - {dataDetaiSpecialty.name}</title>
+                </head>
                 <HomeHeader />
                 <div className='container detail-specialty'>
                     <div className='top'>

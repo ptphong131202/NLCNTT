@@ -46,7 +46,10 @@ class DetailSpecialty extends Component {
     render() {
         let { dataClinic } = this.state;
         return (
-            <> <HomeHeader />
+            <>
+                <head>
+                    <title>{dataClinic.name}</title></head>
+                <HomeHeader />
                 <div className='background-header-clinic'></div>
                 <div className='container DetaiClinic'>
                     {dataClinic &&

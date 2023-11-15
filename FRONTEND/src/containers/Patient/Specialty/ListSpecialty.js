@@ -51,6 +51,9 @@ class ListSpecialty extends Component {
         console.log(listSpecialty)
         return (
             <>
+                <head>
+                    <title>Danh sách chuyên khoa</title>
+                </head>
                 <HomeHeader />
                 <div className='container listSpecialty'>
                     <div className='form-search col-5 mx-auto'>

@@ -31,6 +31,12 @@ class ProfessionalDoctor extends Component {
             this.props.history.push(`/detail-doctor/${doctor.id}`);
         }
     }
+
+    handleListlDoctor = () => {
+        if (this.props.history) {
+            this.props.history.push(`/list-doctor`);
+        }
+    }
     render() {
         let arrDoctors = this.state.arrDoctor;
         let { language } = this.props;
@@ -40,7 +46,7 @@ class ProfessionalDoctor extends Component {
                     <div className='section-content '>
                         <div className='section-content-header'>
                             <div className='section-header-name'><FormattedMessage id="homePage.out-standing-doctor" /></div>
-                            <div className='section-header-navi'><FormattedMessage id="homePage.more-info" /></div>
+                            <div className='section-header-navi' onClick={() => this.handleListlDoctor()}>Xem thêm</div>
                         </div>
                         <Slider {...this.props.settings}>
 

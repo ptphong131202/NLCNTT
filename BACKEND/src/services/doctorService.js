@@ -409,9 +409,11 @@ let getPatientForDoctor = (doctorId, date) => {
                         { model: db.Allcode, as: 'timeTypeBookingData', attributes: ['valueEn', 'valueVi'] },
 
                     ],
-                    raw: false,
+                    raw: true,
                     nest: true,
+                    order: ['id']
                 })
+                console.log(data)
                 resolve({
                     errCode: 0,
                     data: data
@@ -443,12 +445,17 @@ let sendRemedy = (data) => {
                     },
                     raw: false
                 })
+                await db.History.create({
+                    doctorId: data.doctorId,
+                    patientId: data.patientId,
+                    date: data.timeType,
+                    files: data.imgBase64,
 
+                })
                 if (appoiment) {
                     appoiment.statusId = "S3";
                     await appoiment.save();
                 }
-
                 await EmailSevise.sendAttachment({
                     email: data.email,
                     language: data.language,

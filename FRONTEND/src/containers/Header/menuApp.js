@@ -18,9 +18,8 @@ export const adminMenu = [
             { //quản lý kế hoạch khám bệnh bác sĩ
                 name: 'menu.doctor.manage-shedule', link: '/doctor/manage-shedule'
             },
-            /*   {
-                  name: 'menu.admin.manage-admin', link: '/system/user-admin'
-              }, */
+
+
 
 
         ]
@@ -45,7 +44,7 @@ export const adminMenu = [
         name: 'menu.admin.handbook',
         menus: [
             {
-                name: 'menu.admin.manage-handbook', link: '/system/user-handbook'
+                name: 'menu.admin.manage-handbook', link: '/system/manage-handbook'
             },
         ]
     },

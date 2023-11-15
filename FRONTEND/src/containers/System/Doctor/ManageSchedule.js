@@ -182,6 +182,9 @@ class ManageSchedule extends Component {
 
         return (
             <React.Fragment>
+                <head>
+                    <title>Quản lý kế hoạch khám bệnh </title>
+                </head>
                 <div className='container manage-schedule'>
                     <div className='manage-schedule-content mx-auto'>
                         <div className='manage-schedule-title title my-5'>
