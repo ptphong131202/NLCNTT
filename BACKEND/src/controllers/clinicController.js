@@ -40,11 +40,24 @@ let getDetalClinicById = async (req, res) => {
         })
     }
 }
-
+let searchClinic = async (req, res) => {
+    try {
+        let clinic = await clinicSevice.searchClinic(req.query.search);
+        return res.status(200).json(clinic);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from server"
+        })
+    }
+}
 
 module.exports = {
     createNewClinic: createNewClinic,
     getAllClinic: getAllClinic,
     getDetalClinicById: getDetalClinicById,
+    searchClinic: searchClinic
 
 }

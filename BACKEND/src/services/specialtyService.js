@@ -1,5 +1,6 @@
 import db from '../models/index';
-
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 let createSpecialty = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -111,8 +112,46 @@ let getDetalSpecialtyById = (id, location) => {
         }
     })
 }
+
+let searchSpecialty = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let specialties = await db.Specialty.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${data}%`
+                    }
+                }
+            });
+
+            if (specialties && specialties.length > 0) {
+                specialties.map(item => {
+                    item.image = new Buffer(item.image, 'base64').toString('binary');
+                    return item;
+                })
+            }
+            if (specialties && specialties.length > 0) {
+                resolve({
+                    errCode: 0,
+                    data: specialties
+                })
+            }
+            else {
+                resolve({
+                    errCode: 1,
+                    errMessage: "No specialties found!"
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     createSpecialty: createSpecialty,
     getAllSpecialty: getAllSpecialty,
-    getDetalSpecialtyById: getDetalSpecialtyById
+    getDetalSpecialtyById: getDetalSpecialtyById,
+    searchSpecialty: searchSpecialty
 }

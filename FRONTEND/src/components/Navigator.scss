@@ -20,6 +20,8 @@
             line-height: 40px;
             padding: 0 15px;
             border-right: 1px solid $border;
+            min-width: 120px;
+            text-align: center;
 
             &:first-child {
                 /* border-left: 1px solid $border; */

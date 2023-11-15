@@ -152,7 +152,19 @@ let sendRemedy = async (req, res) => {
     }
 }
 
-
+let searchDoctor = async (req, res) => {
+    try {
+        let patient = await doctorSevice.searchDoctor(req.query.search);
+        return res.status(200).json(patient);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Error from the serser!"
+        })
+    }
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
@@ -164,5 +176,6 @@ module.exports = {
     getProfileDoctorById: getProfileDoctorById,
     getPatientForDoctor: getPatientForDoctor,
     sendRemedy: sendRemedy,
+    searchDoctor: searchDoctor,
 
 }

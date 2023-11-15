@@ -62,7 +62,8 @@ let postPatientBookingOppointment = (data) => {
                         roleId: "R3",
                         address: data.address,
                         gender: data.genders,
-                        lastName: data.fullName
+                        lastName: data.fullName,
+                        phonenumber: data.phoneNumber
                     }
                 });
                 resolve({

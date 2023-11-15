@@ -22,6 +22,7 @@ export const adminMenu = [
                   name: 'menu.admin.manage-admin', link: '/system/user-admin'
               }, */
 
+
         ]
     },
     { //quản lý phòng khám

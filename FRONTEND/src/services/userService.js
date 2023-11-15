@@ -97,6 +97,18 @@ const postSendRemedy = (data) => {
     return axios.post(`api/send-remedy`, data);
 }
 
+const searchDoctor = (search) => {
+    return axios.get(`/api/search-doctor?search=${search}`);
+}
+
+const searchSpecialty = (search) => {
+    return axios.get(`/api/search-specialty?search=${search}`);
+}
+
+const searchClinic = (search) => {
+    return axios.get(`/api/search-clinic?search=${search}`);
+}
+
 export {
     handleLoginApi, getAllUser, createNewUserService,
     deleteUserService, editUserService, getAllcodeService,
@@ -106,5 +118,5 @@ export {
     postVerifyBookAppoiment, createNewSpecialty,
     getAllSpecialty, getDetaiSpecialty,
     createNewClinic, getAllClinic, getDetaiClinic, getPatientforDoctor,
-    postSendRemedy
+    postSendRemedy, searchDoctor, searchSpecialty, searchClinic
 };

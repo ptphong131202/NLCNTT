@@ -14,7 +14,7 @@ class ManagePatient extends Component {
             currentDate: moment(new Date()).startOf('day').valueOf(),
             dataPatient: [],
             isOpenRemery: false,
-            dataModal: {}
+            dataModal: {},
         };
     }
 
@@ -95,6 +95,7 @@ class ManagePatient extends Component {
     render() {
         let { dataPatient } = this.state
         let { language } = this.props;
+        console.log(this.props.user)
         return (
             <>
                 <RemeryMadal

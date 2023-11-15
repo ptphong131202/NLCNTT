@@ -1,5 +1,7 @@
 import db from '../models/index';
 require('dotenv').config();
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 import _ from 'lodash';
 import EmailSevise from "./EmailService"
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
@@ -36,8 +38,15 @@ let getAllDoctor = () => {
             let doctors = await db.User.findAll({
                 where: { roleId: "R2" },
                 attributes: {
-                    exclude: ["password", "image"]
-                }
+                    exclude: ["password"]
+                },
+                include: [
+                    { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                    { model: db.Markdowns, attributes: ['description', "contentHTML", "ContentMarkdown"] },
+                ],
+                raw: true,
+                nest: true
+
             })
             resolve({
                 errCode: 0,
@@ -456,6 +465,49 @@ let sendRemedy = (data) => {
         }
     });
 }
+
+
+let searchDoctor = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctors = await db.User.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            lastName: {
+                                [Op.like]: `%${data}%`
+                            }
+                        },
+                        {
+                            firstName: {
+                                [Op.like]: `%${data}%`
+                            }
+                        },
+                    ],
+                    roleId: "R2"
+                },
+                attributes: {
+                    exclude: ["password"]
+                },
+                include: [
+                    { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                    { model: db.Markdowns, attributes: ['description', "contentHTML", "ContentMarkdown"] },
+                ],
+                raw: true,
+                nest: true
+
+            })
+            resolve({
+                errCode: 0,
+                data: doctors
+            })
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctor: getAllDoctor,
@@ -467,4 +519,5 @@ module.exports = {
     getProfileDoctor: getProfileDoctor,
     getPatientForDoctor: getPatientForDoctor,
     sendRemedy: sendRemedy,
+    searchDoctor: searchDoctor
 }

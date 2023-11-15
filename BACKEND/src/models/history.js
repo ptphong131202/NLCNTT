@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            History.belongsTo(models.User, { foreignKey: 'positionId', targetKey: 'id', as: 'patientIdDataHistory' });
             // define association here
         }
     };
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         patientId: DataTypes.INTEGER,
         doctorId: DataTypes.INTEGER,
         description: DataTypes.TEXT,
+        date: DataTypes.STRING,
         files: DataTypes.TEXT,
 
     }, {

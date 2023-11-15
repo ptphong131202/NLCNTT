@@ -337,7 +337,7 @@ class UserRedux extends Component {
                                     <label htmlFor="phonenumber"><FormattedMessage id="manage-user.phonenumber" /></label>
                                     <input type="tel"
                                         className="form-control"
-                                        id="phonenumber" placeholder="Tên"
+                                        id="phonenumber" placeholder="số điện thoại"
                                         value={phonenumber}
                                         onChange={(event) => { this.onChangeInput(event, "phonenumber") }}
                                     />
@@ -346,7 +346,7 @@ class UserRedux extends Component {
                                     <label htmlFor="address"><FormattedMessage id="manage-user.address" /></label>
                                     <input type="text"
                                         className="form-control"
-                                        id="address" placeholder="Tên"
+                                        id="address" placeholder="Địa chỉ"
                                         value={address}
                                         onChange={(event) => { this.onChangeInput(event, "address") }} />
                                 </div>

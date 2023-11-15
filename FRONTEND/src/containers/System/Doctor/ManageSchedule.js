@@ -9,6 +9,7 @@ import DatePicker from '../../../components/Input/DatePicker';
 import moment from 'moment';
 import { Toast, toast } from 'react-toastify';
 import _, { times } from 'lodash';
+import * as actions from "../../../store/actions";
 import { saveBulkScheduleDoctor } from '../../../services/userService'
 class ManageSchedule extends Component {
     constructor(props) {
@@ -18,18 +19,29 @@ class ManageSchedule extends Component {
             listDoctor: [],
             currentDate: '',
             rangeTime: [],
+            fullName: []
         };
     }
 
     componentDidMount() {
         this.props.fetchAllDoctor();
         this.props.fetchAllScheduleHour();
+        if (this.props.userInfo.roleId === 'R2') {
+            let fullName = {}
+            let { language } = this.props;
+            fullName.label = language === 'vi' ? `${this.props.userInfo.firstName} ${this.props.userInfo.lastName}`
+                : `${this.props.userInfo.lastName} ${this.props.userInfo.firstName}`;
+            fullName.value = this.props.userInfo.id
+            this.setState({
+                fullName: fullName
+            })
+        }
     }
     handleChangeSelect = async (selectedDoctor) => {
         this.setState({
             selectedDoctor,
         });
-
+        console.log(selectedDoctor)
     };
     buildInputSelect = (data) => {
         let result = [];
@@ -93,38 +105,69 @@ class ManageSchedule extends Component {
 
     handleSaveSchedule = async () => {
         let result = [];
-        let { rangeTime, selectedDoctor, currentDate } = this.state;
+        let response = ''
+        let { rangeTime, selectedDoctor, currentDate, fullName } = this.state;
 
-        if (selectedDoctor && _.isEmpty(selectedDoctor)) {
-            toast.error("Invalid selected Doctor!")
-            return;
+        if (!fullName) {
+            if (selectedDoctor && _.isEmpty(selectedDoctor)) {
+                toast.error("Invalid selected Doctor!")
+                return;
+            }
         }
         if (!currentDate) {
             toast.error("Invalid date!")
             return;
         }
         let formatedDate = new Date(currentDate).getTime();
-        if (rangeTime && rangeTime.length > 0) {
-            let selectedTime = rangeTime.filter(item => item.isselected === true)
-            if (selectedTime && selectedTime.length > 0) {
-                selectedTime.map(item => {
-                    let object = {};
-                    object.doctorId = selectedDoctor.value;
-                    object.date = formatedDate;
-                    object.timeType = item.keyMap;
-                    result.push(object)
-                })
-            } else {
-                toast.error("Invalid selected time!")
-                return;
+        if (fullName && !_.isEmpty(fullName)) {
+            if (rangeTime && rangeTime.length > 0) {
+                let selectedTime = rangeTime.filter(item => item.isselected === true)
+                if (selectedTime && selectedTime.length > 0) {
+                    selectedTime.map(item => {
+                        let object = {};
+                        object.doctorId = fullName.value;
+                        object.date = formatedDate;
+                        object.timeType = item.keyMap;
+                        result.push(object)
+                    })
+                } else {
+                    toast.error("Invalid selected time!")
+                    return;
+                }
+            }
+        }
+        else if (selectedDoctor) {
+            if (rangeTime && rangeTime.length > 0) {
+                let selectedTime = rangeTime.filter(item => item.isselected === true)
+                if (selectedTime && selectedTime.length > 0) {
+                    selectedTime.map(item => {
+                        let object = {};
+                        object.doctorId = selectedDoctor.value;
+                        object.date = formatedDate;
+                        object.timeType = item.keyMap;
+                        result.push(object)
+                    })
+                } else {
+                    toast.error("Invalid selected time!")
+                    return;
+                }
             }
         }
 
-        let response = await saveBulkScheduleDoctor({
-            arrSchedule: result,
-            doctorId: selectedDoctor.value,
-            date: '' + formatedDate
-        });
+        if (fullName && !_.isEmpty(fullName)) {
+            response = await saveBulkScheduleDoctor({
+                arrSchedule: result,
+                doctorId: fullName.value,
+                date: '' + formatedDate
+            });
+        }
+        else {
+            response = await saveBulkScheduleDoctor({
+                arrSchedule: result,
+                doctorId: selectedDoctor.value,
+                date: '' + formatedDate
+            });
+        }
         if (response && response.errCode === 0) {
             toast.success("Create schedule success!")
         }
@@ -136,6 +179,7 @@ class ManageSchedule extends Component {
     render() {
         let { rangeTime } = this.state;
         let { language } = this.props;
+
         return (
             <React.Fragment>
                 <div className='container manage-schedule'>
@@ -145,14 +189,26 @@ class ManageSchedule extends Component {
                         </div>
                         <div className='container'>
                             <div className='row'>
-                                <div className='col-6 form-group choose'>
-                                    <label> <FormattedMessage id="manage-schedule.choose-doctor" /></label>
-                                    <Select
-                                        value={this.state.selectedDoctor}
-                                        onChange={this.handleChangeSelect}
-                                        options={this.state.listDoctor}
-                                    />
-                                </div>
+
+                                {this.props.userInfo.roleId === 'R1' ?
+                                    <div className='col-6 form-group choose'>
+                                        <label> <FormattedMessage id="manage-schedule.choose-doctor" /></label>
+                                        <Select
+                                            value={this.state.selectedDoctor}
+                                            onChange={this.handleChangeSelect}
+                                            options={this.state.listDoctor}
+                                        />
+                                    </div> :
+                                    <div className='col-6 form-group choose'>
+                                        <label> Bác sĩ</label>
+                                        <Select
+                                            value={this.state.fullName}
+                                            options=''
+                                        />
+                                        {/* <input
+                                            value={fullName}
+                                        /> */}
+                                    </div>}
                                 <div className='col-6 form-group'>
                                     <label> <FormattedMessage id="manage-schedule.choose-date" /></label>
                                     <DatePicker className="form-control date"
@@ -216,6 +272,7 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         allDoctorRedux: state.admin.allDoctor,
+        userInfo: state.user.userInfo,
         isLoggedIn: state.user.isLoggedIn,
         allScheduleTime: state.admin.allScheduleTime
     };

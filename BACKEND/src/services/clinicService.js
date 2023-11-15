@@ -1,5 +1,6 @@
 import db from '../models/index';
-
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 
 let createNewClinic = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -97,8 +98,44 @@ let getDetalClinicById = (id) => {
         }
     })
 }
+
+let searchClinic = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let clinic = await db.Clinic.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${data}%`
+                    }
+                }
+            });
+            if (clinic && clinic.length > 0) {
+                clinic.map(item => {
+                    item.image = new Buffer(item.image, 'base64').toString('binary');
+                    return item;
+                })
+            }
+            if (clinic && clinic.length > 0) {
+                resolve({
+                    errCode: 0,
+                    data: clinic
+                })
+            }
+            else {
+                resolve({
+                    errCode: 1,
+                    errMessage: "No clinic found!"
+                })
+            }
+        }
+        catch (e) {
+            reject(e);
+        }
+    })
+}
 module.exports = {
     createNewClinic: createNewClinic,
     getAllClinic: getAllClinic,
-    getDetalClinicById: getDetalClinicById
+    getDetalClinicById: getDetalClinicById,
+    searchClinic: searchClinic,
 }

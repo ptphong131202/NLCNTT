@@ -5,19 +5,46 @@ import { FormattedMessage } from 'react-intl'; // fomat language
 import { LANGUAGE } from '../../utils'; // vi or en
 import { changeLanguage } from '../../store/actions'; // change language
 import { withRouter } from 'react-router';
+import { searchDoctor } from "../../services/userService"
+import _ from 'lodash'
 class HomeHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isopen: false,
+            listdoctor: []
+        }
+    }
     // change language
     changeLanguage = (language) => {
         // fire redux event: action
         this.props.changeLanguageApp(language); // prop bettween redux and react
     }
-    returnToHome = () => {
+    Moveto = (name) => {
         if (this.props.history) {
-            this.props.history.push(`/home`);
+            this.props.history.push(`/${name}`);
+        }
+    }
+    handleOnchangeInput = async (event) => {
+        let response = await searchDoctor(event.target.value);
+        if (response && !_.isEmpty(response)) {
+            this.setState({
+                listdoctor: response.data,
+                isopen: true
+
+            })
+        }
+    }
+
+    handleOnclistopen = (item) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-doctor/${item.id}`);
         }
     }
     render() {
         let language = this.props.language; // lấy ngôn loai ngôn ngữ từ redux
+        let { listdoctor } = this.state;
+        console.log("listdoctor", listdoctor)
         return (
 
             <React.Fragment>
@@ -25,19 +52,18 @@ class HomeHeader extends Component {
                 <div className='home-header-container   '>
                     <div className='home-header-content'>
                         <div className='home-header-left'>
-                            <div className='bars'><i className='fas fa-bars'></i></div>
-                            <div className='logo-img' onClick={() => this.returnToHome()}></div>
+                            <div className='logo-img' onClick={() => this.Moveto('home')}></div>
                         </div>
                         <div className='home-header-center'>
-                            <div className='child-content'>
+                            <div className='child-content' onClick={() => this.Moveto('list-specialty')}>
                                 <div className='child-content-name'><FormattedMessage id="homeheader.specialty" /></div>
                                 <div className='child-content-title'><FormattedMessage id="homeheader.searchdoctor" /></div>
                             </div>
-                            <div className='child-content'>
+                            <div className='child-content' onClick={() => this.Moveto('list-linic')}>
                                 <div className='child-content-name'><FormattedMessage id="homeheader.medicalfacilities" /></div>
                                 <div className='child-content-title'><FormattedMessage id="homeheader.choosehospital" /></div>
                             </div>
-                            <div className='child-content'>
+                            <div className='child-content' onClick={() => this.Moveto('list-doctor')}>
                                 <div className='child-content-name'><FormattedMessage id="homeheader.doctor" /></div>
                                 <div className='child-content-title'><FormattedMessage id="homeheader.choosegooddoctor" /></div>
                             </div>
@@ -70,8 +96,31 @@ class HomeHeader extends Component {
                             <div className='banner-search'>
                                 <div className='banner-search-content'>
                                     <i className='fas fa-search'></i>
-                                    <input type='text' placeholder='Nhập để tìm kiếm' name='search' />
+                                    <input type='text' placeholder='Nhập để tìm kiếm' name='search'
+                                        onChange={(event) => this.handleOnchangeInput(event)}
+                                    />
                                 </div>
+                                {this.state.isopen === true &&
+                                    <div className='listSearch'>
+                                        {listdoctor &&
+                                            listdoctor.map((item, index) => {
+                                                if (index <= 4)
+                                                    return (
+                                                        <li key={index} onClick={() => this.handleOnclistopen(item)}>
+                                                            {language === 'vi' ? `${item.firstName} ${item.lastName}`
+                                                                : `${item.lastName} ${item.firstName}`}
+                                                        </li>
+                                                    )
+                                            })
+
+
+                                        }
+                                        <li className='listSearch-seemore' onClick={() => this.Moveto('list-doctor')}>
+                                            xem thêm
+                                        </li>
+                                    </div>
+                                }
+
                             </div>
                             <div className='banner-footer'>
                                 <div className='banner-footer-content'>
@@ -144,7 +193,9 @@ class HomeHeader extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        userInfo: state.user.userInfo,
+
     };
 };
 

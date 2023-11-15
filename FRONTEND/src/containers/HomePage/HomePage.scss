@@ -141,7 +141,36 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding-top: 215px;
+        padding-top: 120px;
+        flex-direction: column;
+        position: relative;
+
+        .listSearch {
+            position: absolute;
+            width: 27%;
+            max-height: 200px;
+            background-color: #ffff;
+            top: 170px;
+            z-index: 1000;
+            border-radius: 5px;
+            overflow: hidden;
+
+            li {
+                list-style: none;
+                padding: 5px 20px;
+                text-align: start;
+                border-bottom: 0.5px solid #cccc;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #eeee;
+                }
+            }
+
+            .listSearch-seemore {
+                color: blue;
+            }
+        }
 
         .banner-search-content {
             width: 30%;
@@ -175,7 +204,7 @@
     .banner-footer {
         width: 100%;
         height: 140px;
-        margin-top: 90px;
+        margin-top: 180px;
         background: linear-gradient(#ffffff00,
                 #ffffffb8,
                 #ffff);

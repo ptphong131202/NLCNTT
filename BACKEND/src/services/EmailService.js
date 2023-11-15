@@ -7,7 +7,7 @@ let sendSimpleEmail = async (dataSend) => {
         port: 587,
         secure: false,
         auth: {
-            user: process.env.EMAIL_APP,
+            user: process.env.EMAIL_SEND,
             pass: process.env.EMAILAPPPASSWORD
         }
     });
@@ -66,7 +66,7 @@ let sendAttachment = async (dataSend) => {
         port: 587,
         secure: false,
         auth: {
-            user: process.env.EMAIL_APP,
+            user: process.env.EMAIL_SEND,
             pass: process.env.EMAILAPPPASSWORD
         }
     });

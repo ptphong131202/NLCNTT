@@ -9,6 +9,9 @@ export const path = {
     DETAIL_CLINIC: '/detail-clinic/:id',
     VERIFY_EMAIL_BOOK: '/verify-booking',
     CLINIC: '/clinic',
+    LISTSPECIALTY: '/list-specialty',
+    LISTCLINIC: '/list-linic',
+    LISTDOCTOR: '/list-doctor',
 };
 
 export const LANGUAGE = {
