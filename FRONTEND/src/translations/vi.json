@@ -60,7 +60,10 @@
     },
     "homePage": {
         "out-standing-doctor": "Bác sĩ nỗi bật tuần qua",
-        "more-info": "Tìm kiếm"
+        "more-info": "Tìm kiếm",
+        "Outstanding-specialties": "Chuyên khoa nổi bật",
+        "Outstanding-medical-facilities": "Cơ sở y tế nổi bật",
+        "Handbook": "Cẩm nang"
     },
     "manage-schedule": {
         "title": "Quản lý kế hoạch khám bệnh",

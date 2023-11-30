@@ -6,37 +6,47 @@ import "slick-carousel/slick/slick-theme.css";
 import "./HandBook.scss";
 import { getAllHandbook } from ".././../../services/userService"
 import { withRouter } from 'react-router';
-import ImageHandBook from "../../../assets/163557-dat-lich-cham-soc-wecare247.png";
-class HandBook extends Component {
+import { FormattedMessage } from 'react-intl'; // fomat language
 
-    constructor(props) {
-        super(props);
+class HandBook extends Component
+{
+
+    constructor ( props )
+    {
+        super( props );
         this.state = {
             listHandBook: []
         }
     }
 
-    async componentDidMount() {
+    async componentDidMount ()
+    {
         let res = await getAllHandbook();
-        if (res && res.errCode === 0) {
-            this.setState({
+        if ( res && res.errCode === 0 )
+        {
+            this.setState( {
                 listHandBook: res.data
-            })
+            } )
         }
     }
 
-    handleViewDetailDoctor = (item) => {
-        if (this.props.history) {
-            this.props.history.push(`/detail-handbook/${item.id}`);
+    handleViewDetailDoctor = ( item ) =>
+    {
+        if ( this.props.history )
+        {
+            this.props.history.push( `/detail-handbook/${ item.id }` );
         }
     }
 
-    handleListHandbook = () => {
-        if (this.props.history) {
-            this.props.history.push(`/list-handbook`);
+    handleListHandbook = () =>
+    {
+        if ( this.props.history )
+        {
+            this.props.history.push( `/list-handbook` );
         }
     }
-    render() {
+    render ()
+    {
         let settings = {
             dots: false,
             infinite: false,
@@ -50,27 +60,28 @@ class HandBook extends Component {
                 <div className='Section HandBook'>
                     <div className='section-content '>
                         <div className='section-content-header'>
-                            <div className='section-header-name'>Cơ sở y tế nổi bật</div>
+                            <div className='section-header-name'><FormattedMessage id="homePage.Handbook" /></div>
                             <div className='section-header-navi'
-                                onClick={() => this.handleListHandbook()}
-                            >Xem thêm</div>
+                                onClick={ () => this.handleListHandbook() }
+                            ><FormattedMessage id="homePage.more-info" /></div>
                         </div>
-                        <Slider {...settings}>
-                            {listHandBook && listHandBook.map((item, index) => {
+                        <Slider { ...settings }>
+                            { listHandBook && listHandBook.map( ( item, index ) =>
+                            {
                                 return (
-                                    <div className='section-list-ck section-list-handbook' key={index}
-                                        onClick={() => this.handleViewDetailDoctor(item)} >
+                                    <div className='section-list-ck section-list-handbook' key={ index }
+                                        onClick={ () => this.handleViewDetailDoctor( item ) } >
                                         <div className='section-list handbook'>
                                             <div className='section-list-img section-list-img-handbook'>
-                                                <img className='' src={item.image} />
+                                                <img className='' src={ item.image } />
                                             </div>
                                             <div className=' section-list-name-handbook'>
-                                                {item.name}
+                                                { item.name }
                                             </div>
                                         </div>
                                     </div>
                                 )
-                            })
+                            } )
                             }
 
 
@@ -84,15 +95,17 @@ class HandBook extends Component {
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state =>
+{
     return {
         isLoggedIn: state.user.isLoggedIn
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch =>
+{
     return {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HandBook));
+export default withRouter( connect( mapStateToProps, mapDispatchToProps )( HandBook ) );

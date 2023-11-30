@@ -8,25 +8,24 @@ import ManageDoctor from '../containers/System/admin/ManageDoctor';
 import ManageSpecialty from '../containers/System/admin/Specialty/ManageSpecialty';
 import ManageClinic from '../containers/System/admin/Clinic/ManageClinic';
 import ManageHandbook from '../containers/System/admin/HandBook/ManageHandbook';
-class System extends Component {
-    render() {
+class System extends Component
+{
+    render ()
+    {
         /* { this.props.isLoggedIn && <Header /> } */
         const { systemMenuPath, isLoggedIn } = this.props;
         return (
             <React.Fragment>
-                {isLoggedIn && <Header />}
+                { isLoggedIn && <Header /> }
                 <div className="system-container">
                     <div className="system-list">
                         <Switch>
-                            <Route path="/system/user-manage" component={UserManage} />
-                            <Route path="/system/user-redux" component={UserRedux} />
-                            <Route path="/system/manage-doctor" component={ManageDoctor} />
-                            <Route path="/system/manage-specialty" component={ManageSpecialty} />
-                            <Route path="/system/manage-clinic" component={ManageClinic} />
-                            <Route path="/system/manage-handbook" component={ManageHandbook} />
-
-
-                            <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
+                            <Route path="/system/user-redux" component={ UserRedux } />
+                            <Route path="/system/manage-doctor" component={ ManageDoctor } />
+                            <Route path="/system/manage-specialty" component={ ManageSpecialty } />
+                            <Route path="/system/manage-clinic" component={ ManageClinic } />
+                            <Route path="/system/manage-handbook" component={ ManageHandbook } />
+                            <Route component={ () => { return ( <Redirect to={ systemMenuPath } /> ) } } />
                         </Switch>
                     </div>
                 </div>
@@ -35,16 +34,18 @@ class System extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state =>
+{
     return {
         systemMenuPath: state.app.systemMenuPath,
         isLoggedIn: state.user.isLoggedIn
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch =>
+{
     return {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(System);
+export default connect( mapStateToProps, mapDispatchToProps )( System );

@@ -80,7 +80,10 @@
     },
     "homePage": {
         "out-standing-doctor": "Last week's featured doctor",
-        "more-info": "More infor"
+        "more-info": "More infor",
+        "Outstanding-specialties": "Outstanding specialties",
+        "Outstanding-medical-facilities": "Outstanding medical facilities",
+        "Handbook": "Handbook"
     },
     "manage-schedule": {
         "title": "Manage Doctor's Schedule",
