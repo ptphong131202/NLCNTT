@@ -89,7 +89,8 @@
         "title": "Manage Doctor's Schedule",
         "choose-doctor": "Choose doctor: ",
         "choose-date": "Choose date: ",
-        "save": "Save infor"
+        "save": "Save infor",
+        "doctor": "Doctor"
     },
     "patient": {
         "detail-doctor": {

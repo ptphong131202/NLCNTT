@@ -12,8 +12,10 @@ const initialState = {
     allRequiredDoctorInfor: []
 }
 
-const adminReducer = (state = initialState, action) => {
-    switch (action.type) {
+const adminReducer = ( state = initialState, action ) =>
+{
+    switch ( action.type )
+    {
         case actionTypes.FETCH_GENDER_START:
             let copystate = { ...state };
             copystate.isloadingGender = true;
@@ -58,6 +60,7 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS:
             state.allRequiredDoctorInfor = action.data;
+            console.log( "res", action.data );
             return {
                 ...state,
             }

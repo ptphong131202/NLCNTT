@@ -14,16 +14,19 @@ import 'react-markdown-editor-lite/lib/index.css';
 // MdEditor.use(YOUR_PLUGINS_HERE);
 
 // Initialize a markdown parser
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+const mdParser = new MarkdownIt(/* Markdown-it options */ );
 
 // Finish!
-function handleEditorChange({ html, text }) {
+function handleEditorChange ( { html, text } )
+{
 }
 
 
-class TableUserManage extends Component {
+class TableUserManage extends Component
+{
     // constructor
-    constructor(props) {
+    constructor ( props )
+    {
         super();
         this.state = {
             userRedux: [],
@@ -31,34 +34,37 @@ class TableUserManage extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount ()
+    {
         this.props.fetchUserRedux();
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.userList !== this.props.userList) {
-            this.setState({
+    componentDidUpdate ( prevProps, prevState )
+    {
+        if ( prevProps.userList !== this.props.userList )
+        {
+            this.setState( {
                 userRedux: this.props.userList
-            });
+            } );
         }
     }
 
-    handleAddNewUser = (user) => {
-        this.props.deleteUserRedux(user.id);
+    handleAddNewUser = ( user ) =>
+    {
+        this.props.deleteUserRedux( user.id );
     }
 
-    handleEditUser = (user) => {
-        this.props.handleEditUserFromParent(user)
+    handleEditUser = ( user ) =>
+    {
+        this.props.handleEditUserFromParent( user )
     }
-    render() {
+    render ()
+    {
         let arrayUsers = this.state.userRedux;
         return (
             <React.Fragment>
                 <div className="users-container container userManage" >
-                    <div className=''>
-                        <button className='btn  px-2 adduser'
-                            onClick={() => this.handleAddNewUser()}> <i className="fas fa-plus"></i> Add new user</button>
-                    </div>
+
                     <table className="table container mt-3 table-striped  table-bordered table-manager">
                         <thead className="thead-dark text-center">
                             <tr className="thead-dark text-center bg-th">
@@ -72,53 +78,56 @@ class TableUserManage extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {arrayUsers && arrayUsers.map((item, index) => {
+                            { arrayUsers && arrayUsers.map( ( item, index ) =>
+                            {
                                 return (
                                     <>
                                         <tr>
-                                            <th scope="row">{index + 1}</th>
-                                            <td className='email'>{item.email}</td>
-                                            <td className='name'>{item.firstName}</td>
-                                            <td className='name'>{item.lastName}</td>
-                                            <td className='phone'>{item.phonenumber}</td>
-                                            <td ><p className='address'>{item.address}</p></td>
+                                            <th scope="row">{ index + 1 }</th>
+                                            <td className='email'>{ item.email }</td>
+                                            <td className='name'>{ item.firstName }</td>
+                                            <td className='name'>{ item.lastName }</td>
+                                            <td className='phone'>{ item.phonenumber }</td>
+                                            <td ><p className='address'>{ item.address }</p></td>
                                             <td className='action'>
                                                 <button type='submit'
                                                     className='button buttonEdit'
-                                                    onClick={() => this.handleEditUser(item)}
+                                                    onClick={ () => this.handleEditUser( item ) }
                                                 ><i className='fas fa-pencil-alt'></i></button>
                                                 <button type='submit'
                                                     className='button buttonDelete'
-                                                    onClick={() => this.handleAddNewUser(item)}
+                                                    onClick={ () => this.handleAddNewUser( item ) }
                                                 ><i className='fas fa-trash'></i></button>
                                             </td>
                                         </tr>
                                     </>
                                 )
-                            })}
+                            } ) }
 
                         </tbody>
                     </table>
 
                 </div>
-                {/* <div className='container'> <div className="markdown"><MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /></div></div> */}
+                {/* <div className='container'> <div className="markdown"><MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /></div></div> */ }
             </React.Fragment>
         );
     }
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state =>
+{
     return {
         userList: state.admin.users
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch =>
+{
     return {
-        fetchUserRedux: () => dispatch(action.fetchAllUserStart()),
-        deleteUserRedux: (id) => dispatch(action.deleteUser(id)),
+        fetchUserRedux: () => dispatch( action.fetchAllUserStart() ),
+        deleteUserRedux: ( id ) => dispatch( action.deleteUser( id ) ),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableUserManage);
+export default connect( mapStateToProps, mapDispatchToProps )( TableUserManage );

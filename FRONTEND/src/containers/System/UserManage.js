@@ -141,22 +141,22 @@ class UserManage extends Component
         return (
             <div className="users-container container userManage" >
                 <ModelUser
-                    isOpen={this.state.isOpenModalUsers}
-                    toggleFromParent={this.toggleUserModel}
-                    createNewUser={this.createNewUser}
+                    isOpen={ this.state.isOpenModalUsers }
+                    toggleFromParent={ this.toggleUserModel }
+                    createNewUser={ this.createNewUser }
                 />
-                {this.state.isOpenModalEditUsers &&
+                { this.state.isOpenModalEditUsers &&
                     <ModelEditUser
-                        isOpen={this.state.isOpenModalEditUsers}
-                        toggleFromParent={this.toggleUserEditModel}
-                        currentUser={this.state.userEdit}
-                        editUser={this.doEditUser}
+                        isOpen={ this.state.isOpenModalEditUsers }
+                        toggleFromParent={ this.toggleUserEditModel }
+                        currentUser={ this.state.userEdit }
+                        editUser={ this.doEditUser }
                     />
                 }
                 <div className="title text-center">manage user</div>
                 <div className=''>
                     <button className='btn  px-2 adduser'
-                        onClick={() => this.handleAddNewUser()}> <i className="fas fa-plus"></i> Add new user</button>
+                        onClick={ () => this.handleAddNewUser() }> <i className="fas fa-plus"></i> Add new user</button>
                 </div>
                 <table className="table container mt-3 table-striped  table-bordered table-manager">
                     <thead className="thead-dark text-center">
@@ -171,25 +171,25 @@ class UserManage extends Component
                         </tr>
                     </thead>
                     <tbody>
-                        {arrayUsers && arrayUsers.map( ( item, index ) =>
+                        { arrayUsers && arrayUsers.map( ( item, index ) =>
                         {
                             return (
                                 <>
                                     <tr>
-                                        <th scope="row">{index + 1}</th>
-                                        <td className='email'>{item.email}</td>
-                                        <td className='name'>{item.firstName}</td>
-                                        <td className='name'>{item.lastName}</td>
-                                        <td className='phone'>{item.phonenumber}</td>
-                                        <td ><p className='address'>{item.address}</p></td>
+                                        <th scope="row">{ index + 1 }</th>
+                                        <td className='email'>{ item.email }</td>
+                                        <td className='name'>{ item.firstName }</td>
+                                        <td className='name'>{ item.lastName }</td>
+                                        <td className='phone'>{ item.phonenumber }</td>
+                                        <td ><p className='address'>{ item.address }</p></td>
                                         <td className='action'>
-                                            <button type='submit' className='button buttonEdit' onClick={() => { this.handleEditUser( item ) }}><i className='fas fa-pencil-alt'></i></button>
-                                            <button type='submit' className='button buttonDelete' onClick={() => { this.handleDeleteUser( item ) }}><i className='fas fa-trash'></i></button>
+                                            <button type='submit' className='button buttonEdit' onClick={ () => { this.handleEditUser( item ) } }><i className='fas fa-pencil-alt'></i></button>
+                                            <button type='submit' className='button buttonDelete' onClick={ () => { this.handleDeleteUser( item ) } }><i className='fas fa-trash'></i></button>
                                         </td>
                                     </tr>
                                 </>
                             )
-                        } )}
+                        } ) }
 
                     </tbody>
                 </table>
