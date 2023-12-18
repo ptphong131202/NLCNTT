@@ -4,51 +4,61 @@ import "./ListSpecialty.scss";
 import HomeHeader from '../../HomePage/HomeHeader';
 import { withRouter } from 'react-router';
 import { getAllSpecialty, searchSpecialty } from "../../../services/userService"
+import HomeFooter from "../../HomePage/HomeFooter";
 import _ from "lodash"
-class ListSpecialty extends Component {
+class ListSpecialty extends Component
+{
 
-    constructor(props) {
-        super(props);
+    constructor ( props )
+    {
+        super( props );
         this.state = {
             listSpecialty: [],
             isopen: false
         };
     }
 
-    async componentDidMount() {
+    async componentDidMount ()
+    {
 
         let res = await getAllSpecialty();
-        console.log(res);
-        this.setState({
+        console.log( res );
+        this.setState( {
             listSpecialty: res.data
-        })
+        } )
 
     }
-    componentDidUpdate = async (prevProps, prevState) => {
+    componentDidUpdate = async ( prevProps, prevState ) =>
+    {
 
 
     }
 
-    handleOnclistopen = (item) => {
-        if (this.props.history) {
-            this.props.history.push(`/detail-specialty/${item.id}`);
+    handleOnclistopen = ( item ) =>
+    {
+        if ( this.props.history )
+        {
+            this.props.history.push( `/detail-specialty/${ item.id }` );
         }
     }
 
-    handleOnchaneInput = async (event) => {
-        console.log("check event input: ", event.target.value)
-        let response = await searchSpecialty(event.target.value);
-        if (response && !_.isEmpty(response)) {
-            this.setState({
+    handleOnchaneInput = async ( event ) =>
+    {
+        console.log( "check event input: ", event.target.value )
+        let response = await searchSpecialty( event.target.value );
+        if ( response && !_.isEmpty( response ) )
+        {
+            this.setState( {
                 listSpecialty: response.data
-            })
+            } )
         }
 
     }
-    render() {
+    render ()
+    {
 
         let { listSpecialty } = this.state;
-        console.log(listSpecialty)
+        console.log( listSpecialty )
         return (
             <>
                 <head>
@@ -60,27 +70,28 @@ class ListSpecialty extends Component {
                         <i className='fas fa-search'></i>
                         <input type='text'
                             placeholder='Nhập để tìm kiếm chuyên khoa'
-                            onChange={(event) => this.handleOnchaneInput(event)}
+                            onChange={ ( event ) => this.handleOnchaneInput( event ) }
                         />
                     </div>
                     <div className='specialty-list'>
-                        {listSpecialty && !_.isEmpty(listSpecialty)
-                            && listSpecialty.map((item, index) => {
+                        { listSpecialty && !_.isEmpty( listSpecialty )
+                            && listSpecialty.map( ( item, index ) =>
+                            {
                                 return (
                                     <div className='arrSpecialty'>
                                         <div className='seemore'>
-                                            <span onClick={() => this.handleOnclistopen(item)}>
+                                            <span onClick={ () => this.handleOnclistopen( item ) }>
                                                 Xem thêm
                                             </span>
                                         </div>
-                                        <div className='specialty-item' key={index}>
+                                        <div className='specialty-item' key={ index }>
                                             <div className='logo'>
-                                                <img src={item.image} />
+                                                <img src={ item.image } />
                                             </div>
                                             <div className='right'>
 
                                                 <div className='down'>
-                                                    <div className='desc' dangerouslySetInnerHTML={{ __html: item.descriptionHTML }}></div>
+                                                    <div className='desc' dangerouslySetInnerHTML={ { __html: item.descriptionHTML } }></div>
 
                                                 </div>
                                             </div>
@@ -89,7 +100,7 @@ class ListSpecialty extends Component {
 
                                     </div>
                                 )
-                            })
+                            } )
 
                         }
 
@@ -103,20 +114,23 @@ class ListSpecialty extends Component {
                     </div>
 
                 </div>
+                <HomeFooter />
             </>
         )
     }
 }
-const mapStateToProps = state => {
+const mapStateToProps = state =>
+{
     return {
         language: state.app.language,
 
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch =>
+{
     return {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListSpecialty));
+export default withRouter( connect( mapStateToProps, mapDispatchToProps )( ListSpecialty ) );
